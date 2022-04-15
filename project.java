@@ -83,9 +83,9 @@ public class project {
                 // System.out.println(a+" gcd >> "+gcd.getGCD());
                 return false;
             }else{
-                int exponent = ((n.subtract(BigInteger.ONE)).divide(BigInteger.valueOf(2))).intValue();
+                BigInteger exponent = ((n.subtract(BigInteger.ONE)).divide(BigInteger.valueOf(2)));
                 System.out.println(a+" power > "+exponent);
-                BigInteger x = a.pow(exponent).mod(n);
+                BigInteger x = a.modPow(exponent,n);
                 System.out.println(a+" power > "+exponent+" "+x);
                 if(x.compareTo(BigInteger.ONE) == 0 || x.compareTo(n.subtract(BigInteger.ONE)) == 0){ // x = 1 || x == n-1
                     continue;
