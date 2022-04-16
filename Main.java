@@ -1,12 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException {
+    public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
         PrintStream fileOut = new PrintStream("./out.txt");
         System.setOut(fileOut);
@@ -40,11 +41,11 @@ public class Main {
                 File f = new File(filename);
                 System.out.print("Enter n: ");
                 n = sc.nextInt();
-                PKC.setP(crypt.findPrime(filename, n));
+                PKC.setP(crypt.findPrime(f, n));
             default:
                 break;
         }
 
-        System.out.println(PKC.getP());
+        System.out.println("Prime is " + PKC.getP());
     }
 }

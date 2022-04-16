@@ -5,4 +5,6 @@ there're 2 types of input
 2. File any filetype as a plaintext
 
 #testcase 
-1. String "Hello World" Number: n binary is 10010000 covert to decimal is 144. 163 is prime and also safe prime
+1. String "Hello World" Number: 8, binary is 10010000 covert to decimal is 144. 163 is prime and also safe prime
+
+2. File Test.in contain number written in paintext binary is 11000100 convert to decimal is 196. 227 is prime and safe prime

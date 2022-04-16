@@ -16,6 +16,7 @@ public class Calculator {
         String s = plaintext.substring(index, index+n);
         BigInteger m = new BigInteger(s, 2);
 
+        System.out.println("sub string binary is "+ s+" convert to decimal "+m);
         return findPrime(m);
     }
 
@@ -40,7 +41,7 @@ public class Calculator {
             }
         }
         BigInteger m = new BigInteger(blockStr,2);
-        // System.out.print(m);
+        System.out.println("Sub message is "+blockStr+ " convert to decimal " + m);
         return findPrime(m);
     }
 
@@ -52,6 +53,7 @@ public class Calculator {
             m = m.add(BigInteger.ONE);
         }
         if(LahmenTest(m) && LahmenTest(m.subtract(BigInteger.ONE).divide(BigInteger.valueOf(2)))){
+            System.out.println(m + " is prime ");
             return m;
         }else{
             System.out.println("not safe prime > "+m);
