@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
@@ -27,6 +26,7 @@ public class Main {
         String message;
         String filename;
         int n ;
+        Operation cryptPrim = new Operation();
         switch (in) {
             case "1":
                 System.out.print("Enter message: ");
@@ -34,6 +34,7 @@ public class Main {
                 System.out.print("Enter n: ");
                 n = sc.nextInt();
                 PKC.setP(crypt.findPrime(message, n));
+                System.out.println("Prime is " + cryptPrim.findPrime(message, n));
                 break;
             case "2":
                 System.out.print("Enter file name: ");
@@ -42,10 +43,11 @@ public class Main {
                 System.out.print("Enter n: ");
                 n = sc.nextInt();
                 PKC.setP(crypt.findPrime(f, n));
+                System.out.println("Prime is " + cryptPrim.findPrime(f, n));
             default:
                 break;
         }
 
-        System.out.println("Prime is " + PKC.getP());
+        System.out.println("Big Integer Prime is " + PKC.getP());
     }
 }
