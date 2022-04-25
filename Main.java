@@ -22,6 +22,7 @@ public class Main {
         System.out.println("2. File");
         System.out.print("Enter number 1 or 2: ");
         String in = sc.next();
+        System.out.println();
         sc.nextLine();
         String message;
         String filename;
@@ -29,18 +30,20 @@ public class Main {
         Operation cryptPrim = new Operation();
         switch (in) {
             case "1":
-                System.out.print("Enter message: ");
+                System.out.print("Enter message : ");
                 message = sc.nextLine();
-                System.out.print("Enter n: ");
-                n = sc.nextInt();
+                System.out.println();
+                System.out.print("Enter n (less than equal 31 bits) : ");
+                n = sc.nextInt(); 
+                System.out.println();
                 PKC.setP(crypt.findPrime(message, n));
                 System.out.println("Prime is " + cryptPrim.findPrime(message, n));
                 break;
             case "2":
-                System.out.print("Enter file name: ");
+                System.out.print("Enter file name : ");
                 filename = sc.next();
                 File f = new File(filename);
-                System.out.print("Enter n: ");
+                System.out.print("Enter n (less than equal 31 bits) : ");
                 n = sc.nextInt();
                 PKC.setP(crypt.findPrime(f, n));
                 System.out.println("Prime is " + cryptPrim.findPrime(f, n));
