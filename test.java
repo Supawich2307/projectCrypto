@@ -2,8 +2,8 @@ import java.io.UnsupportedEncodingException;
 
 public class test {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String S = "สวสด";
-        byte[] bytes = S.getBytes("US-ASCII");  
+        String S = "Hello World";
+        byte[] bytes = S.getBytes("TIS-620");  
         StringBuilder binaryStr = new StringBuilder();
         for(byte b : bytes){
             // System.out.println(b);
