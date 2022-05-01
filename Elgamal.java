@@ -1,31 +1,29 @@
-import java.math.BigInteger;
-
 class Elgamal {
-    private BigInteger p;   // public key
-    private BigInteger g;   // public key
-    private BigInteger y;   // public key
-    private BigInteger u;   // private key
+    private long p;   // public key
+    private long g;   // public key
+    private long y;   // public key
+    private long u;   // private key
 
-    public BigInteger getP() {
+    public long getP() {
         return p;
     }
-    public void setP(BigInteger p) {
+    public void setP(long p) {
         this.p = p;
     }
-    public BigInteger getG() {
+    public long getG() {
         return g;
     }
-    public void setG(BigInteger g) {
+    public void setG(long g) {
         this.g = g;
     }
-    public BigInteger getY() {
+    public long getY() {
         return y;
     }
-    public void setY(BigInteger y) {
+    public void setY(long y) {
         this.y = y;
     }
 
-    public String Encrypt(BigInteger p, BigInteger g, BigInteger y, String plainText) {
+    public String Encrypt(long p, long g, long y, String plainText) {
         return null;
     }
 

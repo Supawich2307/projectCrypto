@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeSet;
 
 public class Operation {
     private long inverse;
@@ -134,7 +135,7 @@ public class Operation {
         if(LahmenTest(m) && LahmenTest((m-1)/2)){
             return m;
         }else{
-            System.out.println(m + " not safe prime ");
+            // System.out.println(m + " not safe prime ");
             if(m == 2) return findPrime(m+1);                       // ==2
             else return findPrime(m + 2);                         // !=2
         }
@@ -159,7 +160,7 @@ public class Operation {
                 //System.out.println(a+" power > "+exponent);
                 long x = powerMod(a, exponent, n);
                 //System.out.println(a+" power > "+exponent+" "+x);
-                System.out.println("round: " + i + " a: "+a+" check n: "+n+" exponent " + exponent+" result : " + x);
+                // System.out.println("round: " + i + " a: "+a+" check n: "+n+" exponent " + exponent+" result : " + x);
                 if(x==1 || x == (n-1)){ // x = 1 || x == n-1
                     continue;
                 }else return false;
@@ -208,6 +209,36 @@ public class Operation {
             base = base * 2;
         }
         return dec_value;
+    }
+
+    public long findGenerator(long p){
+        System.out.println("P is "+p);
+        if (isGenerator(2,p)) return 2;
+        if (isGenerator(3,p)) return 3;
+        for(long g = 5; g < p ;g+=2){
+            if(LahmenTest(g)){
+                if(isGenerator(g,p)) 
+                    return g;
+            }   
+        }
+        return -1;
+    }
+    public boolean isGenerator(long g,long p){
+        TreeSet<Long> output = new TreeSet<>();
+        long res = 1 ;
+        System.out.println("G is "+g);
+        for(long i =1;i < p; i++){
+            res = (res * g) % p;
+            System.out.println("round = "+i+" res => "+res);
+            if(output.contains(res)){
+                return false;
+            }
+            else  {
+                output.add(res);
+            }
+        }
+        return true;
+        
     }
 
 }

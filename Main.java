@@ -36,8 +36,8 @@ public class Main {
                 System.out.print("Enter n (less than equal 31 bits) : ");
                 n = sc.nextInt(); 
                 System.out.println();
-                PKC.setP(crypt.findPrime(message, n));
-                System.out.println("Prime is " + cryptPrim.findPrime(message, n));
+                PKC.setP(cryptPrim.findPrime(message, n));
+                // System.out.println("Prime is " + );
                 break;
             case "2":
                 System.out.print("Enter file name : ");
@@ -45,13 +45,16 @@ public class Main {
                 File f = new File(filename);
                 System.out.print("Enter n (less than equal 31 bits) : ");
                 n = sc.nextInt();
-                //PKC.setP(crypt.findPrime(f, n));
-                System.out.println("Prime is " + cryptPrim.findPrime(f, n));
+                // PKC.setP(crypt.findPrime(f, n));
+                PKC.setP(cryptPrim.findPrime(f, n));
+                
+                // System.out.println("Prime is " + cryptPrim.findPrime(f, n));
             default:
                 break;
         }
 
-
-        //System.out.println("Big Integer Prime is " + PKC.getP());
+        PKC.setG(cryptPrim.findGenerator(PKC.getP()));
+        System.out.println("P is => "+PKC.getP()+" \n G is => "+PKC.getG());
+        // System.out.println("Big Integer Prime is " + PKC.getP());
     }
 }
