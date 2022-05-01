@@ -213,14 +213,15 @@ public class Operation {
 
     public long findGenerator(long p){
         System.out.println("P is "+p);
-        if (isGenerator(2,p)) return 2;
-        if (isGenerator(3,p)) return 3;
-        for(long g = 5; g < p ;g+=2){
+        // if (isGenerator(2,p)) return 2;
+        // if (isGenerator(3,p)) return 3;
+        for(long g = p-2; g > 2 ;g-=2){
             if(LahmenTest(g)){
-                if(isGenerator(g,p)) 
+                if(isGenerator(g,p) && (powerModFast(g,((p-1)/2),p) != 1 )) 
                     return g;
             }   
         }
+        if (isGenerator(2,p)) return 2;
         return -1;
     }
     public boolean isGenerator(long g,long p){
