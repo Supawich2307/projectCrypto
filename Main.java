@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-        PrintStream fileOut = new PrintStream("./out.txt");
+        PrintStream fileOut = new PrintStream("./Test_20_2.out");
         System.setOut(fileOut);
         Scanner sc = new Scanner(System.in);
 
@@ -33,7 +33,7 @@ public class Main {
                 message = sc.nextLine();
                 System.out.print("Enter n: ");
                 n = sc.nextInt();
-                PKC.setP(crypt.findPrime(message, n));
+                //PKC.setP(crypt.findPrime(message, n));
                 System.out.println("Prime is " + cryptPrim.findPrime(message, n));
                 break;
             case "2":
@@ -42,12 +42,13 @@ public class Main {
                 File f = new File(filename);
                 System.out.print("Enter n: ");
                 n = sc.nextInt();
-                PKC.setP(crypt.findPrime(f, n));
+                //PKC.setP(crypt.findPrime(f, n));
                 System.out.println("Prime is " + cryptPrim.findPrime(f, n));
             default:
                 break;
         }
 
-        System.out.println("Big Integer Prime is " + PKC.getP());
+
+        //System.out.println("Big Integer Prime is " + PKC.getP());
     }
 }

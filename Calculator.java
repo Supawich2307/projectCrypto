@@ -52,17 +52,17 @@ public class Calculator {
         && m.compareTo(BigInteger.valueOf(2)) != 0){ // check is it not two
             m = m.add(BigInteger.ONE);
         }
-        if(LahmenTest(m) && LahmenTest(m.subtract(BigInteger.ONE).divide(BigInteger.valueOf(2)))){
-            System.out.println(m + " is prime ");
+        if(LehmanTest(m) && LehmanTest(m.subtract(BigInteger.ONE).divide(BigInteger.valueOf(2)))){
+            System.out.println(m + " is safe prime ");
             return m;
         }else{
-            System.out.println("not safe prime > "+m);
+            System.out.println(m + " is not safe prime");
             if(m.compareTo(BigInteger.valueOf(2)) == 0) return findPrime(m.add(BigInteger.ONE)); // ==2
             else return findPrime(m.add(BigInteger.valueOf(2)));                         // !=2
         }
     }
 
-    public Boolean LahmenTest(BigInteger n){
+    public Boolean LehmanTest(BigInteger n){
         Random randNum = new Random();
         int len = n.subtract(BigInteger.ONE).bitLength();
         
@@ -70,21 +70,21 @@ public class Calculator {
             BigInteger a = new BigInteger(len, randNum);
             a = a.mod(n);
             if(a.compareTo(BigInteger.valueOf(2)) == -1){
-                a = a.add(BigInteger.valueOf(1));
+                a = a.add(BigInteger.valueOf(2));
             }
             //System.out.println("round: " + i + " a:"+a+" n > "+n);
             
             ExtendedGCD gcd = new ExtendedGCD(a,n);
             //System.out.println(a+" gcd >> "+gcd.getGCD());
             if(gcd.getGCD().compareTo(BigInteger.ONE) == 1){ // gcd(a,n) > 1
-                // System.out.println(a+" gcd >> "+gcd.getGCD());
+                System.out.println(n+" is not prime. gcd >> "+gcd.getGCD());
                 return false;
             }else{
                 BigInteger exponent = ((n.subtract(BigInteger.ONE)).divide(BigInteger.valueOf(2)));
                 //System.out.println(a+" power > "+exponent);
-                BigInteger x = a.modPow(exponent,n);
+                BigInteger x = a.modPow(exponent, n);
                 //System.out.println(a+" power > "+exponent+" "+x);
-                System.out.println("round: " + i + " a: "+a+" check n: "+n+" exponent " + exponent+" result : " + x);
+                System.out.println(" check n: "+n+" round: " + (i+1) + " a: "+a+" exponent " + exponent+" result : " + x);
                 if(x.compareTo(BigInteger.ONE) == 0 || x.compareTo(n.subtract(BigInteger.ONE)) == 0){ // x = 1 || x == n-1
                     continue;
                 }else return false;

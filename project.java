@@ -17,7 +17,7 @@ public class project {
         PrintStream fileOut = new PrintStream("./out.txt");
         System.setOut(fileOut);
         System.out.println(findPrime(BigInteger.valueOf(10000000)));
-        // LahmenTest(BigInteger.valueOf(1000));
+        // LehmanTest(BigInteger.valueOf(1000));
         // ExtendedGCD g = new ExtendedGCD(BigInteger.valueOf(78),BigInteger.valueOf(29));
         // System.out.println(g.getGCD().compareTo(BigInteger.ONE));
     }
@@ -56,7 +56,7 @@ public class project {
         && m.compareTo(BigInteger.valueOf(2)) != 0){ // check is it not two
             m = m.add(BigInteger.ONE);
         }
-        if(LahmenTest(m) && LahmenTest(m.subtract(BigInteger.ONE).divide(BigInteger.valueOf(2)))){
+        if(LehmanTest(m) && LehmanTest(m.subtract(BigInteger.ONE).divide(BigInteger.valueOf(2)))){
             return m;
         }else{
             System.out.println("not safe prime > "+m);
@@ -65,7 +65,7 @@ public class project {
         }
     }
 
-    public static Boolean LahmenTest(BigInteger n){
+    public static Boolean LehmanTest(BigInteger n){
         Random randNum = new Random();
         int len = n.subtract(BigInteger.ONE).bitLength();
         

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Operation {
+    private long inverse;
+    private long gcd;
+
     public long powerModFast(long n, long x, long m){
         long res = 1; 
  
@@ -38,23 +41,24 @@ public class Operation {
         return answer;
     }
 
-    public long findInverse(long n1, long n2) {
+    public void extendedGCD(long n1, long n2) {
 
         long r = n1%n2;   // r
         long q = n1/n2;   // q
         long a1 = 1, b1 = 0, a2 = 0, b2 = 1;       //b2
-        long res = findInverse(n1, n2, r, q, a1, b1, a2, b2);
+        long res = extendedGCD(n1, n2, r, q, a1, b1, a2, b2);
         if ( res == 0)
-            return -1;
+            this.inverse = -1;
         else 
-            return Math.floorMod(res, n1);
+            this.inverse = Math.floorMod(res, n1);
     }
 
-    public long findInverse(
+    public long extendedGCD(
         long n1, long n2, long r, long q, long a1, long b1, long a2, long b2
     ) {
         
         if(r == 0) { // n1 divisible by n2 
+            this.gcd = n2;
             if(n2 == 1) {
                 return b2;
             } else {
@@ -73,15 +77,26 @@ public class Operation {
             q = n1/n2;
         }
 
-        return findInverse(n1, n2, r, q, a1, b1, a2, b2);
+        return extendedGCD(n1, n2, r, q, a1, b1, a2, b2);
+    }
+
+    public long calculateInverse (long n1, long n2) {
+        extendedGCD(n1, n2);
+        return this.inverse;
+    }
+
+    public long calculateGCD (long n1, long n2) {
+        extendedGCD(n1, n2);
+        return this.gcd;
     }
 
     public long findPrime(File f, int n)  throws IOException{
         String plaintext = readFile(f);
         int index = plaintext.indexOf("1");
         String s = plaintext.substring(index, index+n);
-        long m = binaryToDec(Long.parseLong(s));
-
+        long m = binaryToDec(s);
+        System.out.println("Subtring is "+s+" dec val is "+m);
+        //System.out.println("Subtring is "+plaintext+" dec val is "+m);
         return findPrime(m);
     }
 
@@ -105,8 +120,8 @@ public class Operation {
                 break;
             }
         }
-        long m = binaryToDec(Long.parseLong(blockStr));
-        // System.out.print(m);
+        long m = binaryToDec(blockStr);
+        System.out.println("Subtring is "+blockStr+" dec val is "+m);
         return findPrime(m);
     }
 
@@ -135,9 +150,9 @@ public class Operation {
             }
             //System.out.println("round: " + i + " a:"+a+" n > "+n);
             
-            long gcd = findInverse(a, n);
+            long gcd = calculateGCD(a, n);
             
-            if(gcd == -1){ // cannot find inverse which mean gcd != 1
+            if(gcd > 1){ // cannot find inverse which mean gcd != 1
                 return false;
             }else{
                 long exponent = (n-1)/2;
@@ -182,15 +197,13 @@ public class Operation {
         return plaintext.toString(); 
     }
 
-    public long binaryToDec(long num) {
+    public long binaryToDec(String num) {
         long base = 1;
-        long temp = num;
         long dec_value = 0;
-        while (temp > 0) {
-            long last_digit = temp % 10;
-            temp = temp / 10;
+        for(int i = num.length()-1; i >-1 ;  i--) {
+            long last_digit = Character.getNumericValue(num.charAt(i));
  
-            dec_value += last_digit * base;
+            dec_value += last_digit == 1? base: 0;
  
             base = base * 2;
         }
