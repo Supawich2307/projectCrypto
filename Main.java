@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-        PrintStream fileOut = new PrintStream("./test.out");
+        PrintStream fileOut = new PrintStream("./Test_20_2_g.out");
         System.setOut(fileOut);
         Scanner sc = new Scanner(System.in);
 
@@ -87,6 +87,6 @@ public class Main {
                 break;
         }
 
-        
+
     }
 }

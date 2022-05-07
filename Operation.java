@@ -218,6 +218,7 @@ public class Operation {
             if(isGenerator(g,p)) 
                 return g;
         }
+        if (isGenerator(2,p)) return 2;
         return -1;
     }
 
