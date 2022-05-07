@@ -213,16 +213,14 @@ public class Operation {
 
     public long findGenerator(long p){
         System.out.println("P is "+p);
-        if (isGenerator(2,p)) return 2;
-        if (isGenerator(3,p)) return 3;
-        for(long g = 5; g < p ;g+=2){
-            if(LahmenTest(g)){
-                if(isGenerator(g,p)) 
-                    return g;
-            }   
+        long start = (long)(Math.random()*p);
+        for(long g = (start%p); g < p ;g++){
+            if(isGenerator(g,p)) 
+                return g;
         }
         return -1;
     }
+
     public boolean isGenerator(long g,long p){
         TreeSet<Long> output = new TreeSet<>();
         long res = 1 ;
@@ -240,5 +238,7 @@ public class Operation {
         return true;
         
     }
+
+
 
 }

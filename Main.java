@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-        PrintStream fileOut = new PrintStream("./Test_20_2.out");
+        PrintStream fileOut = new PrintStream("./test.out");
         System.setOut(fileOut);
         Scanner sc = new Scanner(System.in);
 
@@ -53,8 +53,40 @@ public class Main {
                 break;
         }
 
-        PKC.setG(cryptPrim.findGenerator(PKC.getP()));
+        
         System.out.println("P is => "+PKC.getP()+" \n G is => "+PKC.getG());
+        System.out.println("U is => "+PKC.getU()+" \n Y is => "+PKC.getY());
         // System.out.println("Big Integer Prime is " + PKC.getP());
+
+        System.out.println("Please choose function");
+        System.out.println("1. Encryption ");
+        System.out.println("2. Decryption");
+        System.out.print("Enter number 1 or 2: ");
+        int func = sc.nextInt();
+        sc.nextLine();
+        String plaintext = "";
+        System.out.println("Please choose plaintext type");
+        System.out.println("1. Message ");
+        System.out.println("2. File");
+        System.out.print("Enter number 1 or 2: ");
+        
+        int plain_in = sc.nextInt();
+        sc.nextLine();
+        switch (plain_in) {
+            case 1:
+                System.out.print("Enter message : ");
+                plaintext = sc.nextLine();
+                break;
+            case 2:
+                System.out.print("Enter file name : ");
+                filename = sc.next();
+                File f_plain = new File(filename);
+                plaintext = cryptPrim.readFile(f_plain);
+                // System.out.println("Prime is " + cryptPrim.findPrime(f, n));
+            default:
+                break;
+        }
+
+        
     }
 }
