@@ -5,7 +5,7 @@ class Elgamal {
     private long u;   // private key
     private Operation calculate = new Operation();
 
-    
+
     public long getP() {
         return p;
     }
@@ -45,7 +45,7 @@ class Elgamal {
         return u;
     }
 
-    public String Encrypt(long p, long g, long y, String plainText) {
+    public Pair Encrypt(long p, long g, long y, long msg) {
         return null;
     }
 
