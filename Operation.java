@@ -5,16 +5,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.TreeSet;
 
-import javafx.util.Pair;
+
 
 public class Operation {
     private long inverse;
     private long gcd;
+    
 
     public long powerModFast(long n, long x, long m){
         long res = 1; 
@@ -261,30 +259,30 @@ public class Operation {
         }
         return msg;
     }
-    public String convertNumtoString(Long a,Long b){
+    public String decToBinary(Long a,Long b){
 
         String a_binary = Long.toBinaryString(a);
         String b_binary = Long.toBinaryString(b);
-        System.out.println(a_binary+""+b_binary);
+        // System.out.println(a_binary+""+b_binary);
         String cipherBinary = a_binary.concat(b_binary);
-        System.out.println(cipherBinary.length());
-        if(cipherBinary.length() % 8 != 0){
-            int padCounter = cipherBinary.length() % 8;
-            String padding = "";
-            for (int i = 8;i  > padCounter ;i--) {
-                padding += "0";
-            }
-            System.out.println(padding);
-            cipherBinary = padding.concat(cipherBinary);
-        } 
-        System.out.println(cipherBinary.length());
-        String res = "";
-        for (int i = 0; i < cipherBinary.length(); i += 8) {
-            int decimal_value = Integer.parseInt(cipherBinary.substring(i, i+8));
-            res += (char)(decimal_value);
-        }
-        System.out.print(res);
-        return null;
+        // System.out.println(cipherBinary.length());
+        // if(cipherBinary.length() % 8 != 0){
+        //     int padCounter = cipherBinary.length() % 8;
+        //     String padding = "";
+        //     for (int i = 8;i  > padCounter ;i--) {
+        //         padding += "0";
+        //     }
+        //     System.out.println(padding);
+        //     cipherBinary = padding.concat(cipherBinary);
+        // } 
+        // System.out.println(cipherBinary.length());
+        // String res = "";
+        // for (int i = 0; i < cipherBinary.length(); i += 8) {
+        //     int decimal_value = Integer.parseInt(cipherBinary.substring(i, i+8));
+        //     res += (char)(decimal_value);
+        // }
+        // System.out.print(res);
+        return cipherBinary;
     }
     
 }

@@ -2,7 +2,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.util.Pair;
 class Elgamal {
     private long p;   // public key
     private long g;   // public key
@@ -47,7 +46,7 @@ class Elgamal {
         return u;
     }
     
-    public Pair<Long,Long> Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
+    public  Pair Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
         
         System.out.println("p : "+p+"\ng : "+g+"\ny : "+y+"\nm : "+message);
         long k,gcd,a,b1;
@@ -77,8 +76,7 @@ class Elgamal {
         // for (int i = 0; i < b.size(); i++) {
         //     System.out.print(" "+b.get(i));
         // }
-        
-        return new Pair<Long,Long>(a,b);
+        return new Pair(a,b);
     }
 
     

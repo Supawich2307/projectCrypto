@@ -5,13 +5,13 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-import javafx.util.Pair;
 
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
         PrintStream fileOut = new PrintStream("./Encrypttest.out");
         System.setOut(fileOut);
+        
         Scanner sc = new Scanner(System.in);
 
 
@@ -82,8 +82,8 @@ public class Main {
                 plaintext = sc.nextLine();
                 // long plaintextArray [];
                 // plaintextArray = cryptPrim.getPlainText(plaintext, n);
-                Pair<Long,Long> cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
-        cryptPrim.convertNumtoString(cipherNum.getKey(), cipherNum.getValue());
+                Pair cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
+                System.out.println(cryptPrim.decToBinary(cipherNum.a, cipherNum.b));
                 break;
             case 2:
                 System.out.print("Enter file name : ");
