@@ -135,7 +135,7 @@ public class Operation {
         if(LahmenTest(m) && LahmenTest((m-1)/2)){
             return m;
         }else{
-            // System.out.println(m + " not safe prime ");
+            System.out.println(m + " not safe prime ");
             if(m == 2) return findPrime(m+1);                       // ==2
             else return findPrime(m + 2);                         // !=2
         }
@@ -158,7 +158,7 @@ public class Operation {
             }else{
                 long exponent = (n-1)/2;
                 //System.out.println(a+" power > "+exponent);
-                long x = powerMod(a, exponent, n);
+                long x = powerModFast(a, exponent, n);
                 //System.out.println(a+" power > "+exponent+" "+x);
                 // System.out.println("round: " + i + " a: "+a+" check n: "+n+" exponent " + exponent+" result : " + x);
                 if(x==1 || x == (n-1)){ // x = 1 || x == n-1
@@ -168,6 +168,7 @@ public class Operation {
             }
             
         }
+        System.out.println(n + " is prime ");
         return true;
     }
 
@@ -224,18 +225,27 @@ public class Operation {
 
     public boolean isGenerator(long g,long p){
         TreeSet<Long> output = new TreeSet<>();
+        ArrayList<Long> resulList = new ArrayList<>();
+        long resArr[] = new long[(int)p];
         long res = 1 ;
         System.out.println("G is "+g);
         for(long i =1;i < p; i++){
             res = (res * g) % p;
-            System.out.println("round = "+i+" res => "+res);
-            if(output.contains(res)){
+            //System.out.println("round = "+i+" res => "+res);
+            resArr[(int)res] ++;
+            if(resArr[(int)res]>1)
+                return false;
+            //tree set
+            /*if(output.contains(res)){
+                System.out.println("round = "+i+" res => "+res);
                 return false;
             }
             else  {
                 output.add(res);
-            }
+            }*/
         }
+        output.clear();
+        System.gc();
         return true;
         
     }

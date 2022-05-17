@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-        PrintStream fileOut = new PrintStream("./Test_20_2_g.out");
+        PrintStream fileOut = new PrintStream("./Test_26_keysize_2.out");
         System.setOut(fileOut);
         Scanner sc = new Scanner(System.in);
 
@@ -47,7 +47,9 @@ public class Main {
                 n = sc.nextInt();
                 // PKC.setP(crypt.findPrime(f, n));
                 PKC.setP(cryptPrim.findPrime(f, n));
-                
+                PKC.setG();
+                PKC.setU();
+                PKC.setY();
                 // System.out.println("Prime is " + cryptPrim.findPrime(f, n));
             default:
                 break;
@@ -57,7 +59,7 @@ public class Main {
         System.out.println("P is => "+PKC.getP()+" \n G is => "+PKC.getG());
         System.out.println("U is => "+PKC.getU()+" \n Y is => "+PKC.getY());
         // System.out.println("Big Integer Prime is " + PKC.getP());
-
+/*
         System.out.println("Please choose function");
         System.out.println("1. Encryption ");
         System.out.println("2. Decryption");
@@ -86,7 +88,7 @@ public class Main {
             default:
                 break;
         }
-
+*/
 
     }
 }

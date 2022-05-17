@@ -22,7 +22,7 @@ class Elgamal {
     }
 
     public void setG() {
-        calculate.findGenerator(p);
+        this.g = calculate.findGenerator(p);
     }
 
     public long getY() {
