@@ -1,0 +1,189 @@
+Please choose type of plaintext
+1. String message 
+2. File
+Enter number 1 or 2: 
+Enter message : 
+Enter n (less than equal 31 bits) : 
+Subtring is 10010000 dec val is 144
+P is 167
+G is 26
+round = 1 res => 26
+round = 2 res => 8
+round = 3 res => 41
+round = 4 res => 64
+round = 5 res => 161
+round = 6 res => 11
+round = 7 res => 119
+round = 8 res => 88
+round = 9 res => 117
+round = 10 res => 36
+round = 11 res => 101
+round = 12 res => 121
+round = 13 res => 140
+round = 14 res => 133
+round = 15 res => 118
+round = 16 res => 62
+round = 17 res => 109
+round = 18 res => 162
+round = 19 res => 37
+round = 20 res => 127
+round = 21 res => 129
+round = 22 res => 14
+round = 23 res => 30
+round = 24 res => 112
+round = 25 res => 73
+round = 26 res => 61
+round = 27 res => 83
+round = 28 res => 154
+round = 29 res => 163
+round = 30 res => 63
+round = 31 res => 135
+round = 32 res => 3
+round = 33 res => 78
+round = 34 res => 24
+round = 35 res => 123
+round = 36 res => 25
+round = 37 res => 149
+round = 38 res => 33
+round = 39 res => 23
+round = 40 res => 97
+round = 41 res => 17
+round = 42 res => 108
+round = 43 res => 136
+round = 44 res => 29
+round = 45 res => 86
+round = 46 res => 65
+round = 47 res => 20
+round = 48 res => 19
+round = 49 res => 160
+round = 50 res => 152
+round = 51 res => 111
+round = 52 res => 47
+round = 53 res => 53
+round = 54 res => 42
+round = 55 res => 90
+round = 56 res => 2
+round = 57 res => 52
+round = 58 res => 16
+round = 59 res => 82
+round = 60 res => 128
+round = 61 res => 155
+round = 62 res => 22
+round = 63 res => 71
+round = 64 res => 9
+round = 65 res => 67
+round = 66 res => 72
+round = 67 res => 35
+round = 68 res => 75
+round = 69 res => 113
+round = 70 res => 99
+round = 71 res => 69
+round = 72 res => 124
+round = 73 res => 51
+round = 74 res => 157
+round = 75 res => 74
+round = 76 res => 87
+round = 77 res => 91
+round = 78 res => 28
+round = 79 res => 60
+round = 80 res => 57
+round = 81 res => 146
+round = 82 res => 122
+round = 83 res => 166
+round = 84 res => 141
+round = 85 res => 159
+round = 86 res => 126
+round = 87 res => 103
+round = 88 res => 6
+round = 89 res => 156
+round = 90 res => 48
+round = 91 res => 79
+round = 92 res => 50
+round = 93 res => 131
+round = 94 res => 66
+round = 95 res => 46
+round = 96 res => 27
+round = 97 res => 34
+round = 98 res => 49
+round = 99 res => 105
+round = 100 res => 58
+round = 101 res => 5
+round = 102 res => 130
+round = 103 res => 40
+round = 104 res => 38
+round = 105 res => 153
+round = 106 res => 137
+round = 107 res => 55
+round = 108 res => 94
+round = 109 res => 106
+round = 110 res => 84
+round = 111 res => 13
+round = 112 res => 4
+round = 113 res => 104
+round = 114 res => 32
+round = 115 res => 164
+round = 116 res => 89
+round = 117 res => 143
+round = 118 res => 44
+round = 119 res => 142
+round = 120 res => 18
+round = 121 res => 134
+round = 122 res => 144
+round = 123 res => 70
+round = 124 res => 150
+round = 125 res => 59
+round = 126 res => 31
+round = 127 res => 138
+round = 128 res => 81
+round = 129 res => 102
+round = 130 res => 147
+round = 131 res => 148
+round = 132 res => 7
+round = 133 res => 15
+round = 134 res => 56
+round = 135 res => 120
+round = 136 res => 114
+round = 137 res => 125
+round = 138 res => 77
+round = 139 res => 165
+round = 140 res => 115
+round = 141 res => 151
+round = 142 res => 85
+round = 143 res => 39
+round = 144 res => 12
+round = 145 res => 145
+round = 146 res => 96
+round = 147 res => 158
+round = 148 res => 100
+round = 149 res => 95
+round = 150 res => 132
+round = 151 res => 92
+round = 152 res => 54
+round = 153 res => 68
+round = 154 res => 98
+round = 155 res => 43
+round = 156 res => 116
+round = 157 res => 10
+round = 158 res => 93
+round = 159 res => 80
+round = 160 res => 76
+round = 161 res => 139
+round = 162 res => 107
+round = 163 res => 110
+round = 164 res => 21
+round = 165 res => 45
+round = 166 res => 1
+P is => 167 
+ G is => 26
+U is => 20 
+ Y is => 127
+Please choose function
+1. Encryption 
+2. Decryption
+Enter number 1 or 2: Please choose plaintext type
+1. Message 
+2. File
+Enter number 1 or 2: Enter message : k is 60 GCD is 2
+k is 136 GCD is 2
+k is 63 GCD is 1
+a is 71 b is 127

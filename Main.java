@@ -5,10 +5,12 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
+import javafx.util.Pair;
+
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-        PrintStream fileOut = new PrintStream("./Test_20_2_g.out");
+        PrintStream fileOut = new PrintStream("./Encrypttest.out");
         System.setOut(fileOut);
         Scanner sc = new Scanner(System.in);
 
@@ -26,8 +28,10 @@ public class Main {
         sc.nextLine();
         String message;
         String filename;
-        int n ;
+        int n = 0;
         Operation cryptPrim = new Operation();
+        // Pair<Long,Long> cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
+        // cryptPrim.convertNumtoString(cipherNum.getKey(), cipherNum.getValue());
         switch (in) {
             case "1":
                 System.out.print("Enter message : ");
@@ -54,9 +58,9 @@ public class Main {
         }
 
         
-        System.out.println("P is => "+PKC.getP()+" \n G is => "+PKC.getG());
-        System.out.println("U is => "+PKC.getU()+" \n Y is => "+PKC.getY());
-        // System.out.println("Big Integer Prime is " + PKC.getP());
+        System.out.println("P is => "+PKC.getP()+" \nG is => "+PKC.getG());
+        System.out.println("U is => "+PKC.getU()+" \nY is => "+PKC.getY());
+        System.out.println("Big Integer Prime is " + PKC.getP());
 
         System.out.println("Please choose function");
         System.out.println("1. Encryption ");
@@ -76,6 +80,10 @@ public class Main {
             case 1:
                 System.out.print("Enter message : ");
                 plaintext = sc.nextLine();
+                // long plaintextArray [];
+                // plaintextArray = cryptPrim.getPlainText(plaintext, n);
+                Pair<Long,Long> cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
+        cryptPrim.convertNumtoString(cipherNum.getKey(), cipherNum.getValue());
                 break;
             case 2:
                 System.out.print("Enter file name : ");
