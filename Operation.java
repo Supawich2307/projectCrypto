@@ -5,13 +5,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.TreeSet;
+
+
 
 public class Operation {
     private long inverse;
     private long gcd;
+    
 
     public long powerModFast(long n, long x, long m){
         long res = 1; 
@@ -213,7 +214,7 @@ public class Operation {
     }
 
     public long findGenerator(long p){
-        System.out.println("P is "+p);
+        // System.out.println("P is "+p);
         long start = (long)(Math.random()*p);
         for(long g = (start%p); g < p ;g++){
             if(isGenerator(g,p)) 
@@ -224,11 +225,12 @@ public class Operation {
     }
 
     public boolean isGenerator(long g,long p){
+        System.gc();
         TreeSet<Long> output = new TreeSet<>();
         ArrayList<Long> resulList = new ArrayList<>();
         long resArr[] = new long[(int)p];
         long res = 1 ;
-        System.out.println("G is "+g);
+        // System.out.println("G is "+g);
         for(long i =1;i < p; i++){
             res = (res * g) % p;
             //System.out.println("round = "+i+" res => "+res);
@@ -249,7 +251,49 @@ public class Operation {
         return true;
         
     }
+    public long getPlainText(String S) throws UnsupportedEncodingException{
+        byte[] Pbytes = S.getBytes("US-ASCII"); 
+        // StringBuilder binaryStr = new StringBuilder();
+        String binaryStr = "";
+        for (byte b : Pbytes) {
+            int val = b;
+            for(int i = 0;i < 8;i++){
+                binaryStr += (val & 128) == 0 ? 0:1;
+                val <<=1;
+            }
+        }
+        System.out.print(binaryStr);
+        // long msg [] = new long[(int) (Math.ceil(binaryStr.length()/(double) n))];
+        // for(int i = 0; i< msg.length;i++){
+        //     String binary = binaryStr.substring(i*n,(i*n)+n);
+        //     msg[i] = binaryToDec(binary);
+        // }
+        return binaryToDec(binaryStr);
+    }
+    public String decToBinary(Long a,Long b){
 
-
-
+        String a_binary = Long.toBinaryString(a);
+        String b_binary = Long.toBinaryString(b);
+        // System.out.println(a_binary+""+b_binary);
+        String cipherBinary = a_binary.concat(b_binary);
+        // System.out.println(cipherBinary.length());
+        // if(cipherBinary.length() % 8 != 0){
+        //     int padCounter = cipherBinary.length() % 8;
+        //     String padding = "";
+        //     for (int i = 8;i  > padCounter ;i--) {
+        //         padding += "0";
+        //     }
+        //     System.out.println(padding);
+        //     cipherBinary = padding.concat(cipherBinary);
+        // } 
+        // System.out.println(cipherBinary.length());
+        // String res = "";
+        // for (int i = 0; i < cipherBinary.length(); i += 8) {
+        //     int decimal_value = Integer.parseInt(cipherBinary.substring(i, i+8));
+        //     res += (char)(decimal_value);
+        // }
+        // System.out.print(res);
+        return cipherBinary;
+    }
+    
 }

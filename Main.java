@@ -5,11 +5,17 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
+
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
+<<<<<<< HEAD
         PrintStream fileOut = new PrintStream("./Test_26_keysize_2.out");
+=======
+        PrintStream fileOut = new PrintStream("./Encrypttest.out");
+>>>>>>> 0aa7fdb842f00ce4e904a65c1c00057318046b53
         System.setOut(fileOut);
+        
         Scanner sc = new Scanner(System.in);
 
 
@@ -26,8 +32,10 @@ public class Main {
         sc.nextLine();
         String message;
         String filename;
-        int n ;
+        int n = 0;
         Operation cryptPrim = new Operation();
+        // Pair<Long,Long> cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
+        // cryptPrim.convertNumtoString(cipherNum.getKey(), cipherNum.getValue());
         switch (in) {
             case "1":
                 System.out.print("Enter message : ");
@@ -78,6 +86,11 @@ public class Main {
             case 1:
                 System.out.print("Enter message : ");
                 plaintext = sc.nextLine();
+                long plaintext_Long;
+                plaintext_Long = cryptPrim.getPlainText(plaintext);
+                // Pair cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
+                Pair cipherNum =  PKC.Encrypt( PKC.getP(), PKC.getG(),PKC.getY(),plaintext_Long );
+                System.out.println(cryptPrim.decToBinary(cipherNum.a, cipherNum.b));
                 break;
             case 2:
                 System.out.print("Enter file name : ");
