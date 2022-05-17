@@ -80,9 +80,10 @@ public class Main {
             case 1:
                 System.out.print("Enter message : ");
                 plaintext = sc.nextLine();
-                // long plaintextArray [];
-                // plaintextArray = cryptPrim.getPlainText(plaintext, n);
-                Pair cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
+                long plaintext_Long;
+                plaintext_Long = cryptPrim.getPlainText(plaintext);
+                // Pair cipherNum =  PKC.Encrypt( 66307261, 28939543, 25488675,4345666 );
+                Pair cipherNum =  PKC.Encrypt( PKC.getP(), PKC.getG(),PKC.getY(),plaintext_Long );
                 System.out.println(cryptPrim.decToBinary(cipherNum.a, cipherNum.b));
                 break;
             case 2:

@@ -159,7 +159,7 @@ public class Operation {
             }else{
                 long exponent = (n-1)/2;
                 //System.out.println(a+" power > "+exponent);
-                long x = powerMod(a, exponent, n);
+                long x = powerModFast(a, exponent, n);
                 //System.out.println(a+" power > "+exponent+" "+x);
                 // System.out.println("round: " + i + " a: "+a+" check n: "+n+" exponent " + exponent+" result : " + x);
                 if(x==1 || x == (n-1)){ // x = 1 || x == n-1
@@ -230,7 +230,7 @@ public class Operation {
         // System.out.println("G is "+g);
         for(long i =1;i < p; i++){
             res = (res * g) % p;
-            System.out.println("round = "+i+" res => "+res);
+            // System.out.println("round = "+i+" res => "+res);
             if(output.contains(res)){
                 return false;
             }
@@ -241,23 +241,24 @@ public class Operation {
         return true;
         
     }
-    public long [] getPlainText(String S,int n) throws UnsupportedEncodingException{
+    public long getPlainText(String S) throws UnsupportedEncodingException{
         byte[] Pbytes = S.getBytes("US-ASCII"); 
-        StringBuilder binaryStr = new StringBuilder();
+        // StringBuilder binaryStr = new StringBuilder();
+        String binaryStr = "";
         for (byte b : Pbytes) {
             int val = b;
             for(int i = 0;i < 8;i++){
-                binaryStr.append((val & 128) == 0 ? 0:1);
+                binaryStr += (val & 128) == 0 ? 0:1;
                 val <<=1;
             }
         }
-        System.out.print(binaryStr.toString());
-        long msg [] = new long[(int) (Math.ceil(binaryStr.length()/(double) n))];
-        for(int i = 0; i< msg.length;i++){
-            String binary = binaryStr.substring(i*n,(i*n)+n);
-            msg[i] = binaryToDec(binary);
-        }
-        return msg;
+        System.out.print(binaryStr);
+        // long msg [] = new long[(int) (Math.ceil(binaryStr.length()/(double) n))];
+        // for(int i = 0; i< msg.length;i++){
+        //     String binary = binaryStr.substring(i*n,(i*n)+n);
+        //     msg[i] = binaryToDec(binary);
+        // }
+        return binaryToDec(binaryStr);
     }
     public String decToBinary(Long a,Long b){
 
