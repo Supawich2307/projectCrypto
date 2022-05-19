@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 
@@ -293,4 +294,28 @@ public class Operation {
         return cipherBinary;
     }
     
+
+    public String encode(String plaintext) { // convert plaintext to binary
+        return "0010001011";
+    }
+
+    public String encode(Pair cipher) { // cipher to binary
+        return null;
+    }
+
+    public String encode(SignedMessage<Long, Pair> signedMessage) { // signedMessage to binary
+        return null;
+    }
+
+    public SignedMessage<Long, Pair> decodeSignedMessage(String signedMsg) { // decode from binary to object for decrypt
+        return null;
+    }
+
+    public Pair decodeMessage(String cipher) { //to decode from binary to object pair for decrypt
+        return null;
+    }
+
+    public String decodeToPlaintext(String binary) { // convert binary to plaintext
+        return "Hello";
+    }
 }

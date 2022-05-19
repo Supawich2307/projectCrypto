@@ -104,7 +104,7 @@ class Elgamal {
     }
 
     public long DigitalSignature(){
-
+        
         return 0;
     }
     public boolean Verify(long p, long y,long g,SignedMessage <Long ,Pair> msg ){
@@ -119,5 +119,24 @@ class Elgamal {
     }
 //long X,long r ,long s
     
+    public SignedMessage<Long, Pair> signMessage(long msg) {
+        long k, gcd;
+        //gen K
+        do{
+            k = (long)(Math.random()*p) - 1;
+            gcd = calculate.calculateGCD(k, p-1);
+        }
+        while(gcd != 1);
+        k = 7;
+        System.out.println("k is "+k+" GCD is "+gcd);
+
+        long r = calculate.powerModFast(this.g, k, this.p);  
+        System.out.println("r "+r);       //compute r = g^k mod p
+        long inverseK = calculate.calculateInverse((this.p-1), k);  //K inverse mod p-1
+        System.out.println("inverseK "+ inverseK+" p -1 "+(this.p-1));   
+        long s = inverseK*((msg-((this.u*r)%(this.p-1)))%(this.p-1)) % (this.p - 1);                           // inverseK * (X - x*r)
+        
+        return new SignedMessage<Long, Pair>(msg, new Pair(r,s));
+    }
 }
 
