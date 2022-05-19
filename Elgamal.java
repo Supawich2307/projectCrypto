@@ -103,6 +103,21 @@ class Elgamal {
         return X;
     }
 
+    public long DigitalSignature(){
+
+        return 0;
+    }
+    public boolean Verify(long p, long y,long g,SignedMessage <Long ,Pair> msg ){
+        long sender = calculate.powerModFast(g, msg.message, p);
+        long signature = (calculate.powerModFast(y, msg.signature.a , p) * calculate.powerModFast(msg.signature.a, msg.signature.b,p) ) % p;
+        System.out.println(sender+" "+signature);
+        if(sender == signature){
+            return true;
+        }else{
+            return false;
+        }
+    }
+//long X,long r ,long s
     
 }
 

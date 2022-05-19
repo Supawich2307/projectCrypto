@@ -226,8 +226,6 @@ public class Operation {
 
     public boolean isGenerator(long g,long p){
         System.gc();
-        TreeSet<Long> output = new TreeSet<>();
-        ArrayList<Long> resulList = new ArrayList<>();
         long resArr[] = new long[(int)p];
         long res = 1 ;
         // System.out.println("G is "+g);
@@ -246,7 +244,6 @@ public class Operation {
                 output.add(res);
             }*/
         }
-        output.clear();
         System.gc();
         return true;
         
