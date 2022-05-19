@@ -361,13 +361,13 @@ public class Operation {
         StringBuilder binary = new StringBuilder(Long.toBinaryString(message));
         String plaintext = "";
         int i ;
-        for(i = binary.length();i > 6;i -= 8){
-            int ascii = (int) binaryToDec(binary.subSequence(i-7 ,i).toString());
+        for(i = binary.length();i > 7;i -= 8){
+            int ascii = (int) binaryToDec(binary.subSequence(i-8 ,i).toString());
             char c = (char) ascii;
             plaintext = c + plaintext; 
         }
-        if(i < 0){
-            int ascii = (int) binaryToDec(binary.subSequence( 0,i+8).toString());
+        if(i < 8){
+            int ascii = (int) binaryToDec(binary.subSequence( 0,i).toString());
             char c = (char) ascii;
             plaintext = c + plaintext; 
         }

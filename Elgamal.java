@@ -69,7 +69,7 @@ class Elgamal {
         do{
             k = (long)(Math.random()*p) - 1;
             gcd = calculate.calculateGCD(k, p-1);
-            // System.out.println("k is "+k+" GCD is "+gcd);
+            System.out.println("k is "+k+" GCD is "+gcd);
         }
         while(gcd != 1);
         // ArrayList<Long> b = new ArrayList<Long>();
