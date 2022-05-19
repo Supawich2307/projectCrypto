@@ -9,11 +9,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-<<<<<<< HEAD
-        PrintStream fileOut = new PrintStream("./Test_26_keysize_2.out");
-=======
         PrintStream fileOut = new PrintStream("./Encrypttest.out");
->>>>>>> 0aa7fdb842f00ce4e904a65c1c00057318046b53
         System.setOut(fileOut);
         
         Scanner sc = new Scanner(System.in);
