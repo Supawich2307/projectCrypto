@@ -55,6 +55,10 @@ class Elgamal {
     public long getU() {
         return u;
     }
+    @Override
+    public String toString(){
+        return "\nP is "+p+"\nG is "+g+"\nU is "+u+"\nY is "+y;
+    }
     
     public  Pair Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
         
@@ -65,7 +69,7 @@ class Elgamal {
         do{
             k = (long)(Math.random()*p) - 1;
             gcd = calculate.calculateGCD(k, p-1);
-            System.out.println("k is "+k+" GCD is "+gcd);
+            // System.out.println("k is "+k+" GCD is "+gcd);
         }
         while(gcd != 1);
         // ArrayList<Long> b = new ArrayList<Long>();
@@ -81,8 +85,6 @@ class Elgamal {
         // System.out.println("b_value >>"+b_value);
         // b.add(b_value);
         // }
-
-        System.out.print("a is "+a+"\nb is "+b+"\n");
         // for (int i = 0; i < b.size(); i++) {
         //     System.out.print(" "+b.get(i));
         // }
@@ -93,6 +95,7 @@ class Elgamal {
     public long Decrypt(long p, long u, Pair cipherText) {
         long a = cipherText.a;
         long b = cipherText.b;
+        
 
         // X = b * a^(p-1-u)
 
@@ -103,6 +106,22 @@ class Elgamal {
         return X;
     }
 
+    public long DigitalSignature(){
+
+        return 0;
+    }
+    public boolean Verify(long p, long y,long g,SignedMessage <Long ,Pair> msg ){
+        long sender = calculate.powerModFast(g, msg.message, p);
+        long signature = (calculate.powerModFast(y, msg.signature.a , p) * calculate.powerModFast(msg.signature.a, msg.signature.b,p) ) % p;
+        System.out.println(sender+" "+signature);
+        if(sender == signature){
+            return true;
+        }else{
+            return false;
+        }
+    }
+//long X,long r ,long s
+    
     public SignedMessage<Long, Pair> signMessage(long msg) {
         long k, gcd;
         //gen K
