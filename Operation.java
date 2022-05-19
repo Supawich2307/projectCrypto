@@ -98,7 +98,7 @@ public class Operation {
         int index = plaintext.indexOf("1");
         String s = plaintext.substring(index, index+n);
         long m = binaryToDec(s);
-        System.out.println("Subtring is "+s+" dec val is "+m);
+        // System.out.println("Subtring is "+s+" dec val is "+m);
         //System.out.println("Subtring is "+plaintext+" dec val is "+m);
         return findPrime(m);
     }
@@ -124,7 +124,7 @@ public class Operation {
             }
         }
         long m = binaryToDec(blockStr);
-        System.out.println("Subtring is "+blockStr+" dec val is "+m);
+        // System.out.println("Subtring is "+blockStr+" dec val is "+m);
         return findPrime(m);
     }
 
@@ -137,7 +137,7 @@ public class Operation {
         if(LahmenTest(m) && LahmenTest((m-1)/2)){
             return m;
         }else{
-            System.out.println(m + " not safe prime ");
+            // System.out.println(m + " not safe prime ");
             if(m == 2) return findPrime(m+1);                       // ==2
             else return findPrime(m + 2);                         // !=2
         }
@@ -170,7 +170,7 @@ public class Operation {
             }
             
         }
-        System.out.println(n + " is prime ");
+        // System.out.println(n + " is prime ");
         return true;
     }
 
@@ -249,9 +249,57 @@ public class Operation {
         return true;
         
     }
-    public long getPlainText(String S) throws UnsupportedEncodingException{
-        byte[] Pbytes = S.getBytes("US-ASCII"); 
-        // StringBuilder binaryStr = new StringBuilder();
+    // public long getPlainText(String S) throws UnsupportedEncodingException{
+    //     byte[] Pbytes = S.getBytes("US-ASCII"); 
+    //     // StringBuilder binaryStr = new StringBuilder();
+    //     String binaryStr = "";
+    //     for (byte b : Pbytes) {
+    //         int val = b;
+    //         for(int i = 0;i < 8;i++){
+    //             binaryStr += (val & 128) == 0 ? 0:1;
+    //             val <<=1;
+    //         }
+    //     }
+    //     System.out.print(binaryStr);
+    //     // long msg [] = new long[(int) (Math.ceil(binaryStr.length()/(double) n))];
+    //     // for(int i = 0; i< msg.length;i++){
+    //     //     String binary = binaryStr.substring(i*n,(i*n)+n);
+    //     //     msg[i] = binaryToDec(binary);
+    //     // }
+    //     return binaryToDec(binaryStr);
+    // }
+    // public String decToBinary(Long a,Long b){
+
+    //     String a_binary = Long.toBinaryString(a);
+    //     String b_binary = Long.toBinaryString(b);
+    //     // System.out.println(a_binary+""+b_binary);
+    //     String cipherBinary = a_binary.concat(b_binary);
+
+    //     // pad => insert 0 follow key size 
+
+    //     // System.out.println(cipherBinary.length());
+    //     // if(cipherBinary.length() % 8 != 0){
+    //     //     int padCounter = cipherBinary.length() % 8;
+    //     //     String padding = "";
+    //     //     for (int i = 8;i  > padCounter ;i--) {
+    //     //         padding += "0";
+    //     //     }
+    //     //     System.out.println(padding);
+    //     //     cipherBinary = padding.concat(cipherBinary);
+    //     // } 
+    //     // System.out.println(cipherBinary.length());
+    //     // String res = "";
+    //     // for (int i = 0; i < cipherBinary.length(); i += 8) {
+    //     //     int decimal_value = Integer.parseInt(cipherBinary.substring(i, i+8));
+    //     //     res += (char)(decimal_value);
+    //     // }
+    //     // System.out.print(res);
+    //     return cipherBinary;
+    // }
+    
+
+    public long encode(String plaintext) throws UnsupportedEncodingException{ // convert plaintext to binary
+        byte[] Pbytes = plaintext.getBytes("US-ASCII"); 
         String binaryStr = "";
         for (byte b : Pbytes) {
             int val = b;
@@ -260,47 +308,38 @@ public class Operation {
                 val <<=1;
             }
         }
-        System.out.print(binaryStr);
-        // long msg [] = new long[(int) (Math.ceil(binaryStr.length()/(double) n))];
-        // for(int i = 0; i< msg.length;i++){
-        //     String binary = binaryStr.substring(i*n,(i*n)+n);
-        //     msg[i] = binaryToDec(binary);
-        // }
         return binaryToDec(binaryStr);
+      
     }
-    public String decToBinary(Long a,Long b){
 
-        String a_binary = Long.toBinaryString(a);
-        String b_binary = Long.toBinaryString(b);
-        // System.out.println(a_binary+""+b_binary);
-        String cipherBinary = a_binary.concat(b_binary);
-        // System.out.println(cipherBinary.length());
-        // if(cipherBinary.length() % 8 != 0){
-        //     int padCounter = cipherBinary.length() % 8;
-        //     String padding = "";
-        //     for (int i = 8;i  > padCounter ;i--) {
-        //         padding += "0";
-        //     }
-        //     System.out.println(padding);
-        //     cipherBinary = padding.concat(cipherBinary);
-        // } 
-        // System.out.println(cipherBinary.length());
-        // String res = "";
-        // for (int i = 0; i < cipherBinary.length(); i += 8) {
-        //     int decimal_value = Integer.parseInt(cipherBinary.substring(i, i+8));
-        //     res += (char)(decimal_value);
-        // }
-        // System.out.print(res);
+    public String encode(Pair cipher,long key_size) { // cipher to binary
+        String a_binary = Long.toBinaryString(cipher.a);
+        String b_binary = Long.toBinaryString(cipher.b);
+        
+        if(a_binary.length() < key_size){
+            int padCounter = (int) key_size - a_binary.length();
+            String padding = "";
+            for (int i = 1;i <= padCounter;i++) {
+                padding += "0";
+            }
+            
+            a_binary = padding.concat(a_binary);
+        }
+        if(b_binary.length() < key_size){
+            int padCounter = (int) key_size - b_binary.length();
+            String padding = "";
+            for (int i = 1;i <= padCounter;i++) {
+                padding += "0";
+            }
+            
+            b_binary = padding.concat(b_binary);
+        }
+
+        String cipherBinary  = a_binary.concat(b_binary);
+
+        System.out.println(cipherBinary);
+
         return cipherBinary;
-    }
-    
-
-    public String encode(String plaintext) { // convert plaintext to binary
-        return "0010001011";
-    }
-
-    public String encode(Pair cipher) { // cipher to binary
-        return null;
     }
 
     public String encode(SignedMessage<Long, Pair> signedMessage) { // signedMessage to binary
@@ -312,10 +351,26 @@ public class Operation {
     }
 
     public Pair decodeMessage(String cipher) { //to decode from binary to object pair for decrypt
-        return null;
+        String a = cipher.substring(0,cipher.length()/2);
+        String b = cipher.substring(cipher.length()/2,cipher.length());
+        System.out.println(a.length()+" "+b.length());
+        return new Pair(binaryToDec(a),binaryToDec(b));
     }
 
-    public String decodeToPlaintext(String binary) { // convert binary to plaintext
-        return "Hello";
+    public String decodeToPlaintext(long message) { // convert dec to plaintext
+        StringBuilder binary = new StringBuilder(Long.toBinaryString(message));
+        String plaintext = "";
+        int i ;
+        for(i = binary.length();i > 6;i -= 8){
+            int ascii = (int) binaryToDec(binary.subSequence(i-7 ,i).toString());
+            char c = (char) ascii;
+            plaintext = c + plaintext; 
+        }
+        if(i < 0){
+            int ascii = (int) binaryToDec(binary.subSequence( 0,i+8).toString());
+            char c = (char) ascii;
+            plaintext = c + plaintext; 
+        }
+        return plaintext;
     }
 }
