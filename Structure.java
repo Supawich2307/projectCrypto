@@ -84,5 +84,4 @@ class EncryptedMessage {
         return this.cipher;
     }  
 
-
 }
