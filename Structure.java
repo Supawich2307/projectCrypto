@@ -102,6 +102,13 @@ class EncryptedMessage {
         this.cipher = cipher;
     }
 
+
+    public int getB() {
+        return B;
+    }
+    public void setB(int b) {
+        B = b;
+    }
     @Override
     public String toString() {
         return "EncryptedMessage [M=" + M + ", N=" + N  + ", type=" + type + ", cipher=" + cipher+"]";
