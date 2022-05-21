@@ -26,3 +26,35 @@ class SignedMessage  <T, K>
         return "SignedMessage [message=" + message + ", signature=" + signature + "]";
     }
 }
+
+class PublicKey <T>{
+    T p;
+    T g;
+    T y;
+    int key_size;
+
+    public PublicKey(T p, T g, T y, int key_size) {
+        this.p = p;
+        this.g = g;
+        this.y = y;
+        this.key_size = key_size;
+    }
+
+    @Override
+    public String toString() {
+        return "PublicKey [g=" + g + ", p=" + p + ", y=" + y + ", key_size=" +key_size+"]";
+    }
+
+}
+
+enum MediaType {
+    PLAINTEXT,
+    FILE
+}
+class EncryptedMessage {
+    int N;              //actual size of plaintext
+    int M;              // block number
+    MediaType type;     //
+    Pair[] cipher;    // 
+
+}
