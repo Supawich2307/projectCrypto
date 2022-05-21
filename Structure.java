@@ -58,8 +58,11 @@ class EncryptedMessage {
     int M;              // block number
     int B;              // block size
     MediaType type;     //
-    String cipher[];    // 
-    EncryptedMessage(int N,int B,int M,MediaType type,String cipher){
+    Pair cipher[];    // 
+    EncryptedMessage () {
+
+    }
+    EncryptedMessage(int N,int B,int M,MediaType type, Pair[] cipher){
         this.N = N;
         this.M = M;
         this.B = B;
@@ -91,11 +94,11 @@ class EncryptedMessage {
         this.type = type;
     }
 
-    public String[] getCipher() {
+    public Pair[] getCipher() {
         return cipher;
     }
 
-    public void setCipher(String[] cipher) {
+    public void setCipher(Pair[] cipher) {
         this.cipher = cipher;
     }
 
