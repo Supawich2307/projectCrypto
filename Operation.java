@@ -3,9 +3,13 @@ import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Scanner;
 import java.util.TreeSet;
 
 
@@ -298,7 +302,13 @@ public class Operation {
     // }
     
 
-    public long encode(String plaintext) throws UnsupportedEncodingException{ // convert plaintext to binary
+    public long encode(String plaintext){ // convert plaintext to binary
+        
+        return binaryToDec(plaintext);
+      
+    }
+
+    public String encodeToBinary(String plaintext) throws UnsupportedEncodingException{
         byte[] Pbytes = plaintext.getBytes("US-ASCII"); 
         String binaryStr = "";
         for (byte b : Pbytes) {
@@ -308,8 +318,21 @@ public class Operation {
                 val <<=1;
             }
         }
-        return binaryToDec(binaryStr);
-      
+        return binaryStr;
+    }
+
+    public String[] encodeToBlock(String binaryText, int block_size) {
+        int N = (int)Math.ceil(binaryText.length()/block_size);
+        String [] blocks = new String[N];
+        StringBuilder temp = new StringBuilder(binaryText);
+        int i = 0;
+        for( i = 0; i < N-1; i++) {
+            blocks[i] = temp.substring(i*block_size, (i+1)*block_size);
+        }
+        
+        blocks[i] = appendZero(temp.substring(i*block_size, temp.length()), block_size);    //last box must be padded 
+        
+        return blocks;
     }
 
     public String encode(Pair cipher,long key_size) { // cipher to binary
@@ -337,7 +360,7 @@ public class Operation {
 
         String cipherBinary  = a_binary.concat(b_binary);
 
-        System.out.println(cipherBinary);
+        //System.out.println(cipherBinary);
 
         return cipherBinary;
     }
@@ -350,7 +373,7 @@ public class Operation {
         return null;
     }
 
-    public Pair decodeMessage(String cipher) { //to decode from binary to object pair for decrypt
+    public Pair decodeMessage(String cipher) {     // to decode from binary to object pair for decrypt
         String a = cipher.substring(0,cipher.length()/2);
         String b = cipher.substring(cipher.length()/2,cipher.length());
         System.out.println(a.length()+" "+b.length());
@@ -372,5 +395,49 @@ public class Operation {
             plaintext = c + plaintext; 
         }
         return plaintext;
+    }
+
+    public String paddingZero(String text, int size) {
+        for(int i = text.length(); i < size; i++) {
+            text = "0"+text;
+        }
+        return text;
+    }
+
+    public String appendZero(String text, int size) {
+        for(int i = text.length(); i < size; i++) {
+            text = text + "0";
+        }
+        return text;
+    }
+
+
+    public void addPublicKey (Hashtable<String, PublicKey<Long>> pubKeyList, String filename)
+    throws IOException
+    {
+        Scanner fileIn = new Scanner(new FileReader(filename));
+        
+        while(fileIn.hasNext()) {
+            String name = fileIn.next();
+            int key_size = fileIn.nextInt();
+            long p = binaryToDec(fileIn.next());
+            long g = binaryToDec(fileIn.next());
+            long y = binaryToDec(fileIn.next());
+            pubKeyList.put(name, new PublicKey<Long>(p, g, y, key_size));
+        }
+    }
+
+
+    public void writeMessage(EncryptedMessage msg, String filename) throws IOException{
+        PrintWriter out = new PrintWriter(filename);
+        out.write(msg.getN()+" ");
+        out.write(msg.getB()+" ");
+        out.write(msg.getM()+" ");
+        String type = msg.getType() == MediaType.FILE? "FILE": "PLAINTEXT";
+        out.write(type+"\n");
+        for(int i = 0; i < msg.getM(); i++){
+
+        }
+        out.close();
     }
 }

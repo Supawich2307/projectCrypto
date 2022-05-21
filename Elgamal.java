@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +12,25 @@ class Elgamal {
     private long u;   // private key
     private int n;  //key size
     private Operation calculate = new Operation();
+    private String name;
 
+    public Elgamal() {
+        this.name ="unknown";
+    }
+
+    public Elgamal(String name) {
+        this.name = name;
+    }
+
+    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public long getP() {
         return p;
@@ -60,6 +81,32 @@ class Elgamal {
         return "\nP is "+p+"\nG is "+g+"\nU is "+u+"\nY is "+y;
     }
     
+    public void genKey(String source, int key_size) throws UnsupportedEncodingException {
+        this.p = calculate.findPrime(source, key_size);
+        setG();
+        setU();
+        setY();
+        setN(key_size);
+    }
+
+    public void genKey(File source, int key_size) throws IOException {
+        this.p = calculate.findPrime(source, key_size);
+        setG();
+        setU();
+        setY();
+        setN(key_size);
+    }
+
+    public void writePublicKey (String filename) throws IOException{
+        PrintWriter out = new PrintWriter(filename);
+        out.write(name+" ");
+        out.write( n+"\n");
+        out.write(calculate.paddingZero(Long.toBinaryString(p), n)+"\n");
+        out.write(calculate.paddingZero(Long.toBinaryString(g), n)+"\n");
+        out.write(calculate.paddingZero(Long.toBinaryString(y), n)+"");
+        out.close();
+    }
+
     public  Pair Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
         
         System.out.println("p : "+p+"\ng : "+g+"\ny : "+y+"\nm : "+message);
@@ -91,6 +138,29 @@ class Elgamal {
         return new Pair(a,b);
     }
 
+    public EncryptedMessage encryptMessage (String plaintext, PublicKey<Long> receiver) 
+    throws UnsupportedEncodingException { // Send message
+        int block_size = (int)(Math.floor(Math.log(receiver.p)));
+        String binaryText = calculate.encodeToBinary(plaintext);
+        int actual_size = binaryText.length();
+        String[] blocks = calculate.encodeToBlock(binaryText, block_size);
+        int M = blocks.length;      // M is number of blocks
+        Pair[] cipher_dec = new Pair[M];
+        for(int i = 0; i < M; i++) {
+            cipher_dec[i] = Encrypt(receiver.p, receiver.g, receiver.y, calculate.binaryToDec(blocks[i]));
+        }
+
+
+        EncryptedMessage real_cipher = new EncryptedMessage();
+        real_cipher.setM(M);
+        real_cipher.setN(actual_size);
+        real_cipher.setCipher(cipher_dec);
+        real_cipher.setType(MediaType.PLAINTEXT);
+        real_cipher.setB(block_size);
+        
+        return real_cipher;
+
+    }
     
     public long Decrypt(long p, long u, Pair cipherText) {
         long a = cipherText.a;
