@@ -55,6 +55,6 @@ class EncryptedMessage {
     int N;              //actual size of plaintext
     int M;              // block number
     MediaType type;     //
-    Pair[] cipher;    // 
+    String[] cipher;    // 
 
 }
