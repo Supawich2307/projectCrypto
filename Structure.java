@@ -56,8 +56,35 @@ enum MediaType {
 class EncryptedMessage {
     int N;              //actual size of plaintext
     int M;              // block number
+    int B;              // block size
     MediaType type;     //
-    String[] cipher;    // 
+    String cipher;    // 
+    EncryptedMessage(int N,int B,int M,MediaType type,String cipher){
+        this.N = N;
+        this.M = M;
+        this.B = B;
+        this.type = type;
+        this.cipher = cipher;
+    }
+    @Override
+    public String toString(){
+        return null;
+    }
+    public int getN(){
+        return this.N;
+    }  
+    public int getB(){
+        return this.B;
+    }
+    public int getM(){
+        return this.M;
+    }  
+    public MediaType getType(){
+        return this.type;
+    }  
+    public String getcipher(){
+        return this.cipher;
+    }  
 
     
 
