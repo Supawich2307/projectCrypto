@@ -96,7 +96,7 @@ class EncryptedMessage {
 
     @Override
     public String toString() {
-        return "EncryptedMessage [M=" + M + ", N=" + N + ", cipher=" + Arrays.toString(cipher) + ", type=" + type + "]";
+        return "EncryptedMessage [M=" + M + ", N=" + N  + ", type=" + type + ", cipher=" + Arrays.toString(cipher)+"]";
     }
    
 }
