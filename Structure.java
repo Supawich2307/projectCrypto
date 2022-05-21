@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class Pair 
 {
     long a;
@@ -57,4 +59,44 @@ class EncryptedMessage {
     MediaType type;     //
     String[] cipher;    // 
 
+    
+
+
+    public int getN() {
+        return N;
+    }
+
+    public void setN(int n) {
+        N = n;
+    }
+
+    public int getM() {
+        return M;
+    }
+
+    public void setM(int m) {
+        M = m;
+    }
+
+    public MediaType getType() {
+        return type;
+    }
+
+    public void setType(MediaType type) {
+        this.type = type;
+    }
+
+    public String[] getCipher() {
+        return cipher;
+    }
+
+    public void setCipher(String[] cipher) {
+        this.cipher = cipher;
+    }
+
+    @Override
+    public String toString() {
+        return "EncryptedMessage [M=" + M + ", N=" + N + ", cipher=" + Arrays.toString(cipher) + ", type=" + type + "]";
+    }
+   
 }
