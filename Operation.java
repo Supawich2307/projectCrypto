@@ -373,11 +373,12 @@ public class Operation {
         return null;
     }
 
-    public Pair[] readCipherText(String message,int numBlock,int block_size){
+    public Pair[] readCipherText(String message,int numBlock,int key_size){
         String [] cipherTextRaw = message.split(" ");
         Pair [] cipherTextDec = new Pair [numBlock];
-        for (int i = 0;i < numBlock-1;i++) {
-            cipherTextDec[i] = decodeMessage(cipherTextRaw[i]);
+        for (int i = 0;i < numBlock;i++) {
+            String cipher = appendZero(cipherTextRaw[i], key_size);
+            cipherTextDec[i] = decodeMessage(cipher);
             System.out.println(cipherTextDec[i]);
         }
         return cipherTextDec;
@@ -389,6 +390,19 @@ public class Operation {
         String b = cipher.substring(cipher.length()/2,cipher.length());
         System.out.println(a.length()+" "+b.length());
         return new Pair(binaryToDec(a),binaryToDec(b));
+    }
+
+    public String decodeToMessage(long [] plainDec){
+        String plaintext = "";
+        int i = 1;
+        for (long l : plainDec) {
+            
+            plaintext += decodeToPlaintext(l);
+            System.out.println(l+" "+i+" "+plaintext);
+            i++;
+        }
+        
+        return plaintext;
     }
 
     public String decodeToPlaintext(long message) { // convert dec to plaintext

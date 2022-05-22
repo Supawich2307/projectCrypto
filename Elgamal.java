@@ -212,9 +212,16 @@ class Elgamal {
         return new SignedMessage<Long, Pair>(msg, new Pair(r,s));
     }
 
-    public long[] DecryptMessage(Pair Message,int numBlock ,int block_size){ //Pair long to []long
-        //convert 
-        return null;
+    public long[] DecryptMessage(Pair[] Message,int numBlock){ //Pair long to []long
+        //convert
+        long[] plaintext = new long [numBlock];
+        for(int i = 0;i < plaintext.length;i++){
+            Pair msg = Message[i];
+            plaintext[i] = Decrypt(9489407, 755048,msg);
+            System.out.println(plaintext[i]);
+        }
+        
+        return plaintext;
     }
 }
 
