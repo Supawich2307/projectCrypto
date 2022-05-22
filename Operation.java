@@ -18,6 +18,14 @@ public class Operation {
     private long inverse;
     private long gcd;
     
+    public int findLog(Long n){
+        int ans = 0;
+        while(n > 0) {
+            n/=2;
+            ans++;
+        }
+        return ans-1;
+    }
 
     public long powerModFast(long n, long x, long m){
         long res = 1; 
@@ -322,7 +330,7 @@ public class Operation {
     }
 
     public String[] encodeToBlock(String binaryText, int block_size) {
-        int N = (int)Math.ceil(binaryText.length()/block_size);
+        int N = (int)Math.ceil((double)binaryText.length()/block_size);
         String [] blocks = new String[N];
         StringBuilder temp = new StringBuilder(binaryText);
         int i = 0;
@@ -330,7 +338,7 @@ public class Operation {
             blocks[i] = temp.substring(i*block_size, (i+1)*block_size);
         }
         
-        blocks[i] = appendZero(temp.substring(i*block_size, temp.length()), block_size);    //last box must be padded 
+        blocks[N-1] = appendZero(temp.substring(i*block_size, temp.length()), block_size);    //last box must be padded 
         
         return blocks;
     }
@@ -435,9 +443,12 @@ public class Operation {
         out.write(msg.getM()+" ");
         String type = msg.getType() == MediaType.FILE? "FILE": "PLAINTEXT";
         out.write(type+"\n");
-        for(int i = 0; i < msg.getM(); i++){
-
+        StringBuilder ciphertext = new StringBuilder();
+        for(int i = 0; i < msg.getM() - 1 ; i++){
+            ciphertext.append(encode(msg.getCipher()[i], msg.getB())+" ");
         }
+        ciphertext.append(encode(msg.getCipher()[msg.getM()-1], msg.getB()));
+        out.write(ciphertext.toString());
         out.close();
     }
 }

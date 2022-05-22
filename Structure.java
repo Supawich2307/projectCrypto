@@ -111,7 +111,12 @@ class EncryptedMessage {
     }
     @Override
     public String toString() {
-        return "EncryptedMessage [M=" + M + ", N=" + N  + ", type=" + type + ", cipher=" + cipher+"]";
+        String ciphertext = "";
+        for (Pair pair : cipher) {
+            ciphertext += pair.toString()+"\n";
+        }
+        return "EncryptedMessage [M=" + M + ", N=" + N  + ", type=" + type+"]\n"+ciphertext;
+
     }
    
 }

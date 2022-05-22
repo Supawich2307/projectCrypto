@@ -1,0 +1,47 @@
+P is => 9489407 
+ G is => 8432495
+U is => 267451 
+ Y is => 4127182
+Name is Bob public key is PublicKey [g=8432495, p=9489407, y=4127182, key_size=24]
+Name is Alice public key is PublicKey [g=5840173, p=8575187, y=3844290, key_size=24]
+plaintext isHello, Bob!
+text to binary is
+01001000 01100101 01101100 01101100 01101111 00101100 00100000 01000010
+01101111 01100010 00100001
+actual size of plaintext is 88
+message block 1 is 01001000011001010110110
+p : 9489407
+g : 8432495
+y : 4127182
+m : 2372278
+k is 1660035 GCD is 1
+message block 2 is 00110110001101111001011
+p : 9489407
+g : 8432495
+y : 4127182
+m : 1776587
+k is 5473342 GCD is 2
+k is 8609855 GCD is 1
+message block 3 is 00001000000100001001101
+p : 9489407
+g : 8432495
+y : 4127182
+m : 264269
+k is 2089763 GCD is 1
+message block 4 is 11101100010001000010000
+p : 9489407
+g : 8432495
+y : 4127182
+m : 7741968
+k is 6747098 GCD is 2
+k is 8136800 GCD is 2
+k is 7191976 GCD is 2
+k is 8890672 GCD is 2
+k is 1026438 GCD is 2
+k is 4356655 GCD is 1
+EncryptedMessage [M=4, N=88, type=PLAINTEXT]
+Pair [a=3258572, b=3772844]
+Pair [a=1359430, b=6121252]
+Pair [a=4029551, b=2781854]
+Pair [a=3522420, b=2212476]
+
