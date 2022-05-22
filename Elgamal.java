@@ -218,5 +218,10 @@ class Elgamal {
         
         return new SignedMessage<Long, Pair>(msg, new Pair(r,s));
     }
+
+    public long[] DecryptMessage(Pair Message,int numBlock ,int block_size){ //Pair long to []long
+        //convert 
+        return null;
+    }
 }
 

@@ -381,6 +381,17 @@ public class Operation {
         return null;
     }
 
+    public Pair[] readCipherText(String message,int numBlock,int block_size){
+        String [] cipherTextRaw = message.split(" ");
+        Pair [] cipherTextDec = new Pair [numBlock];
+        for (int i = 0;i < numBlock-1;i++) {
+            cipherTextDec[i] = decodeMessage(cipherTextRaw[i]);
+            System.out.println(cipherTextDec[i]);
+        }
+        return cipherTextDec;
+    }
+
+    //to decode from binary to object pair for decrypt
     public Pair decodeMessage(String cipher) {     // to decode from binary to object pair for decrypt
         String a = cipher.substring(0,cipher.length()/2);
         String b = cipher.substring(cipher.length()/2,cipher.length());
