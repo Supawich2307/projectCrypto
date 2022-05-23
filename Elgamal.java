@@ -107,6 +107,12 @@ class Elgamal {
         out.close();
     }
 
+    public void writePrivateKey () throws IOException{
+        PrintWriter out = new PrintWriter(name+".pri");
+        out.write(calculate.paddingZero(Long.toBinaryString(u), n)+"");
+        out.close();
+    }
+
     public  Pair Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
         
         System.out.println("p : "+p+"\ng : "+g+"\ny : "+y+"\nm : "+message);
