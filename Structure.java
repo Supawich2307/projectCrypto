@@ -58,7 +58,9 @@ class EncryptedMessage {
     int M;              // block number
     int B;              // block size
     MediaType type;     //
-    Pair cipher[];    // 
+    Pair cipher[];      // 
+    long r;             //
+    long s;             //
     EncryptedMessage () {
 
     }
@@ -108,6 +110,18 @@ class EncryptedMessage {
     }
     public void setB(int b) {
         B = b;
+    }
+    public void setR(long r){
+        this.r = r;
+    }
+    public long getR(){
+        return this.r;
+    }
+    public void setS(long s){
+        this.s = s;
+    }
+    public long getS(){
+        return this.s;
     }
     @Override
     public String toString() {
