@@ -57,8 +57,8 @@ public class intregate {
         Pair cipher_alice = operate.decodeMessage(readCipher_alice);
         System.out.println("sub cipher :"+cipher_alice);
         long msg = Bob.Decrypt(Bob.getP(), Bob.getU(), cipher_alice);
-        String plaintext_alice = operate.decodeToPlaintext(msg);
-        System.out.println("plaintext Alice :"+plaintext_alice);
+        // String plaintext_alice = operate.decodeToPlaintext(msg);
+        // System.out.println("plaintext Alice :"+plaintext_alice);
 
     }
 }

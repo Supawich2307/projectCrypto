@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringBufferInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -261,54 +262,6 @@ public class Operation {
         return true;
         
     }
-    // public long getPlainText(String S) throws UnsupportedEncodingException{
-    //     byte[] Pbytes = S.getBytes("US-ASCII"); 
-    //     // StringBuilder binaryStr = new StringBuilder();
-    //     String binaryStr = "";
-    //     for (byte b : Pbytes) {
-    //         int val = b;
-    //         for(int i = 0;i < 8;i++){
-    //             binaryStr += (val & 128) == 0 ? 0:1;
-    //             val <<=1;
-    //         }
-    //     }
-    //     System.out.print(binaryStr);
-    //     // long msg [] = new long[(int) (Math.ceil(binaryStr.length()/(double) n))];
-    //     // for(int i = 0; i< msg.length;i++){
-    //     //     String binary = binaryStr.substring(i*n,(i*n)+n);
-    //     //     msg[i] = binaryToDec(binary);
-    //     // }
-    //     return binaryToDec(binaryStr);
-    // }
-    // public String decToBinary(Long a,Long b){
-
-    //     String a_binary = Long.toBinaryString(a);
-    //     String b_binary = Long.toBinaryString(b);
-    //     // System.out.println(a_binary+""+b_binary);
-    //     String cipherBinary = a_binary.concat(b_binary);
-
-    //     // pad => insert 0 follow key size 
-
-    //     // System.out.println(cipherBinary.length());
-    //     // if(cipherBinary.length() % 8 != 0){
-    //     //     int padCounter = cipherBinary.length() % 8;
-    //     //     String padding = "";
-    //     //     for (int i = 8;i  > padCounter ;i--) {
-    //     //         padding += "0";
-    //     //     }
-    //     //     System.out.println(padding);
-    //     //     cipherBinary = padding.concat(cipherBinary);
-    //     // } 
-    //     // System.out.println(cipherBinary.length());
-    //     // String res = "";
-    //     // for (int i = 0; i < cipherBinary.length(); i += 8) {
-    //     //     int decimal_value = Integer.parseInt(cipherBinary.substring(i, i+8));
-    //     //     res += (char)(decimal_value);
-    //     // }
-    //     // System.out.print(res);
-    //     return cipherBinary;
-    // }
-    
 
     public long encode(String plaintext){ // convert plaintext to binary
         
@@ -368,7 +321,7 @@ public class Operation {
 
         String cipherBinary  = a_binary.concat(b_binary);
 
-        //System.out.println(cipherBinary);
+        
 
         return cipherBinary;
     }
@@ -381,12 +334,13 @@ public class Operation {
         return null;
     }
 
-    public Pair[] readCipherText(String message,int numBlock,int block_size){
+    public Pair[] readCipherText(String message,int numBlock,int key_size){
         String [] cipherTextRaw = message.split(" ");
         Pair [] cipherTextDec = new Pair [numBlock];
-        for (int i = 0;i < numBlock-1;i++) {
-            cipherTextDec[i] = decodeMessage(cipherTextRaw[i]);
-            System.out.println(cipherTextDec[i]);
+        for (int i = 0;i < numBlock;i++) {
+            String cipher = appendZero(cipherTextRaw[i], key_size);
+            cipherTextDec[i] = decodeMessage(cipher);
+            
         }
         return cipherTextDec;
     }
@@ -395,12 +349,27 @@ public class Operation {
     public Pair decodeMessage(String cipher) {     // to decode from binary to object pair for decrypt
         String a = cipher.substring(0,cipher.length()/2);
         String b = cipher.substring(cipher.length()/2,cipher.length());
-        System.out.println(a.length()+" "+b.length());
+        
         return new Pair(binaryToDec(a),binaryToDec(b));
     }
 
-    public String decodeToPlaintext(long message) { // convert dec to plaintext
-        StringBuilder binary = new StringBuilder(Long.toBinaryString(message));
+    public String decodeToMessage(long [] plainDec,EncryptedMessage encMsg){
+        String plaintext = "";
+        for (long l : plainDec) {
+            String plaintextBinary = Long.toBinaryString(l);
+            
+            plaintext += paddingZero(plaintextBinary, encMsg.getB()-1);
+            
+        }
+        
+        plaintext = decodeToPlaintext(plaintext.substring(0, encMsg.getN()));
+        
+        
+        return plaintext;
+    }
+
+    public String decodeToPlaintext(String binary) { // convert dec to plaintext
+        
         String plaintext = "";
         int i ;
         for(i = binary.length();i > 7;i -= 8){
