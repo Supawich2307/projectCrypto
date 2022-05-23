@@ -230,7 +230,7 @@ class Elgamal {
         long[] plaintext = new long [numBlock];
         for(int i = 0;i < plaintext.length;i++){
             Pair msg = Message[i];
-            plaintext[i] = Decrypt(9489407, 267451,msg);
+            plaintext[i] = Decrypt(this.p, this.u,msg);
             System.out.println(plaintext[i]);
         }
         
