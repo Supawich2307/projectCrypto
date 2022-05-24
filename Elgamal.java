@@ -1,9 +1,11 @@
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class Elgamal {
     private long p;   // public key
@@ -107,6 +109,31 @@ class Elgamal {
         out.write(calculate.paddingZero(Long.toBinaryString(g), n)+"\n");
         out.write(calculate.paddingZero(Long.toBinaryString(y), n)+"");
         out.close();
+    }
+
+    public void writePrivateKey () throws IOException{
+        PrintWriter out = new PrintWriter(name+".pri");
+        out.write(name+" ");
+        out.write( n+"\n");
+        out.write(calculate.paddingZero(Long.toBinaryString(p), n)+"\n");
+        out.write(calculate.paddingZero(Long.toBinaryString(g), n)+"\n");
+        out.write(calculate.paddingZero(Long.toBinaryString(u), n)+"\n");
+        out.write(calculate.paddingZero(Long.toBinaryString(y), n)+"");
+        out.close();
+    }
+
+    public void setKeyFromFile (String filename) throws IOException
+    {
+        Scanner fileIn = new Scanner(new FileReader(filename));
+        
+        while(fileIn.hasNext()) {
+            this.name = fileIn.next();
+            this.n = fileIn.nextInt();
+            this.p = calculate.binaryToDec(fileIn.next());
+            this.g = calculate.binaryToDec(fileIn.next());
+            this.u = calculate.binaryToDec(fileIn.next());
+            this.y = calculate.binaryToDec(fileIn.next());
+        }
     }
 
     public  Pair Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
@@ -229,7 +256,7 @@ class Elgamal {
         long[] plaintext = new long [numBlock];
         for(int i = 0;i < plaintext.length;i++){
             Pair msg = Message[i];
-            plaintext[i] = Decrypt(9489407, 267451,msg);
+            plaintext[i] = Decrypt(this.p, this.u,msg);
             System.out.println(plaintext[i]);
         }
         
