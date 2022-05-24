@@ -216,15 +216,30 @@ class Elgamal {
 
         return 0;
     }
-    public boolean Verify(SignedMessage <Long ,Pair> msg ){
-        System.out.println("msg "+msg.message+" r "+msg.signature.a+" s "+msg.signature.b);
-        long sender = calculate.powerModFast(this.g, msg.message, this.p);
-        long y_pow_r = calculate.powerModFast(this.y, msg.signature.a , this.p);
-        long r_pow_s = calculate.powerModFast(msg.signature.a, msg.signature.b,this.p);
-        System.out.println(y_pow_r+"   "+r_pow_s);
-        long signature = (y_pow_r * r_pow_s) % this.p;
-        System.out.println(sender+" "+signature);
-        if(sender == signature){
+    
+    public boolean Verify(SignedMessage<String, Pair> signedMessage, PublicKey<Long> sender ){
+        long X = Math.floorMod(calculate.hashFunction(signedMessage.message), (sender.p-1));
+        return Verify(X, signedMessage.signature, sender);
+    }
+
+    public boolean VerifyCipher(SignedMessage<EncryptedMessage, Pair> signedMessage, PublicKey<Long> sender ){
+        StringBuilder ciphertext = new StringBuilder();
+        for(int i = 0; i < signedMessage.message.getM() ; i++){
+            ciphertext.append(calculate.encode(signedMessage.message.getCipher()[i], signedMessage.message.getB()));
+        }
+        long X = Math.floorMod(calculate.hashFunction(ciphertext.toString()), (sender.p-1));
+        return Verify(X, signedMessage.signature, sender);
+    }
+
+    public boolean Verify(Long msg, Pair signature , PublicKey<Long> sender ){
+        System.out.println("msg "+msg+" r "+signature.a+" s "+signature.b);
+        long res_msg = calculate.powerModFast(sender.g, msg, sender.p);  //calculate from message
+        long y_pow_r = calculate.powerModFast(sender.y, signature.a , sender.p);
+        long r_pow_s = calculate.powerModFast(signature.a, signature.b,sender.p);
+        System.out.println(" y pow r: " + y_pow_r+" r pow s: "+r_pow_s);
+        long res_sign = (y_pow_r * r_pow_s) % sender.p; //calculate from signature
+        System.out.println(res_msg+" compare to "+res_sign);
+        if(res_msg == res_sign){
             return true;
         }else{
             return false;
@@ -232,12 +247,34 @@ class Elgamal {
     }
 //long X,long r ,long s
     
-    public SignedMessage<Long, Pair> signMessage(long msg) {
+    public SignedMessage signMessage(String msg) {
+        long X =  Math.floorMod(calculate.hashFunction(msg), (this.p - 1)) ;
+        Pair signature = getSignature(X);
+        SignedMessage<String, Pair> signedMessage = new SignedMessage<>(msg, signature);
+        return signedMessage;
+    }
+
+    public SignedMessage signMessage(EncryptedMessage msg) {
+        StringBuilder ciphertext = new StringBuilder();
+        for(int i = 0; i < msg.getM() ; i++){
+            ciphertext.append(calculate.encode(msg.getCipher()[i], msg.getB()));
+        }
+        long X =  Math.floorMod(calculate.hashFunction(ciphertext.toString()), (this.p - 1));
+        Pair signature = getSignature(X);
+        SignedMessage<EncryptedMessage, Pair> signedMessage = new SignedMessage<>(msg, signature);
+        return signedMessage;
+    }
+
+    public Pair getSignature(long msg) {
+        System.out.println("Sigining ... ");
         long k, gcd;
         //gen K
         do{
-            k = (long)(Math.random()*p) - 1;
-            gcd = calculate.calculateGCD(k, p-1);
+            k = (long)(Math.random()*(p-1));
+            if (k==0)
+                k++;
+            System.out.println("random "+k);
+            gcd = calculate.calculateGCD(p-1, k);
         }
         while(gcd != 1);
         System.out.println("k is "+k+" GCD is "+gcd);
@@ -246,9 +283,13 @@ class Elgamal {
                //compute r = g^k mod p
         long inverseK = calculate.calculateInverse((this.p-1), k);  //K inverse mod p-1
         System.out.println("inverseK "+ inverseK+" p -1 "+(this.p-1));   
-        long s = inverseK*((msg-((this.u*r)%(this.p-1)))%(this.p-1)) % (this.p - 1);                           // inverseK * (X - x*r)
+        long cal_msg = Math.floorMod(msg-((this.u*r)%(this.p-1)), (this.p-1));
+        long s = inverseK*(cal_msg) % (this.p - 1);                           // inverseK * (X - x*r)
         System.out.println("msg "+msg+" r "+r+" s "+s);
-        return new SignedMessage<Long, Pair>(msg, new Pair(r,s));
+
+        
+        System.out.println("-- Sign finished -- ");
+        return new Pair(r,s);
     }
 
     public long[] DecryptMessage(Pair[] Message,int numBlock){ //Pair long to []long
