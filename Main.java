@@ -21,7 +21,7 @@ public class Main {
 
         SignedMessage <Long,Pair> msg = new SignedMessage<>((long)1,new Pair(1,1));
         
-        System.out.print(PKC.Verify(1,1,1, msg));
+        // System.out.print(PKC.Verify(1,1,1, msg));
 
         // System.out.println("Please choose type of plaintext");
         // System.out.println("1. String message ");

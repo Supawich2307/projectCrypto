@@ -57,7 +57,9 @@ class Elgamal {
     public void setY() {
         this.y = calculate.powerModFast(this.g, this.u, this.p);
     }
-
+    public void setY(long y){
+        this.y = y;
+    }
     public void setU(long u) {
         this.u = u;
     }
@@ -187,9 +189,13 @@ class Elgamal {
 
         return 0;
     }
-    public boolean Verify(long p, long y,long g,SignedMessage <Long ,Pair> msg ){
-        long sender = calculate.powerModFast(g, msg.message, p);
-        long signature = (calculate.powerModFast(y, msg.signature.a , p) * calculate.powerModFast(msg.signature.a, msg.signature.b,p) ) % p;
+    public boolean Verify(SignedMessage <Long ,Pair> msg ){
+        System.out.println("msg "+msg.message+" r "+msg.signature.a+" s "+msg.signature.b);
+        long sender = calculate.powerModFast(this.g, msg.message, this.p);
+        long y_pow_r = calculate.powerModFast(this.y, msg.signature.a , this.p);
+        long r_pow_s = calculate.powerModFast(msg.signature.a, msg.signature.b,this.p);
+        System.out.println(y_pow_r+"   "+r_pow_s);
+        long signature = (y_pow_r * r_pow_s) % this.p;
         System.out.println(sender+" "+signature);
         if(sender == signature){
             return true;
@@ -207,15 +213,14 @@ class Elgamal {
             gcd = calculate.calculateGCD(k, p-1);
         }
         while(gcd != 1);
-        k = 7;
         System.out.println("k is "+k+" GCD is "+gcd);
 
         long r = calculate.powerModFast(this.g, k, this.p);  
-        System.out.println("r "+r);       //compute r = g^k mod p
+               //compute r = g^k mod p
         long inverseK = calculate.calculateInverse((this.p-1), k);  //K inverse mod p-1
         System.out.println("inverseK "+ inverseK+" p -1 "+(this.p-1));   
         long s = inverseK*((msg-((this.u*r)%(this.p-1)))%(this.p-1)) % (this.p - 1);                           // inverseK * (X - x*r)
-        
+        System.out.println("msg "+msg+" r "+r+" s "+s);
         return new SignedMessage<Long, Pair>(msg, new Pair(r,s));
     }
 

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringBufferInputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -431,4 +433,28 @@ public class Operation {
         out.write(ciphertext.toString());
         out.close();
     }
+    public long hashFunction(String msg){
+		String sha1 = "";
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-1");
+	        digest.reset();
+	        digest.update(msg.getBytes("utf8"));
+	        sha1 = String.format("%040x", new BigInteger(1, digest.digest()));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+
+        return getDecimal(sha1);
+    }
+    public long getDecimal(String hex){  
+        String digits = "0123456789ABCDEF";  
+            hex = hex.toUpperCase();  
+            long val = 0;  
+            for (int i = 0; i < hex.length(); i++) {  
+                char c = hex.charAt(i);  
+                long d = digits.indexOf(c);  
+                val = 16*val + d;  
+            }  
+        return val;  
+    }  
 }
