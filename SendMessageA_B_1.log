@@ -1,0 +1,69 @@
+Name is Uraiwan public key is PublicKey [g=3926497, p=8999183, y=2013935, key_size=24]
+Name is Bob public key is PublicKey [g=7904612, p=9489407, y=1028293, key_size=24]
+Name is Alice public key is PublicKey [g=6600373, p=11063639, y=1980971, key_size=24]
+plaintext isHello, Uraiwan!
+text to binary is010010000110010101101100011011000110111100101100001000000101010101110010011000010110100101110111011000010110111000100001
+actual size of plaintext is 120
+message block1is01001000011001010110110
+p : 8999183
+g : 3926497
+y : 2013935
+m : 2372278
+k is 7717135 GCD is 1
+message block2is00110110001101111001011
+p : 8999183
+g : 3926497
+y : 2013935
+m : 1776587
+k is 1549777 GCD is 1
+message block3is00001000000101010101110
+p : 8999183
+g : 3926497
+y : 2013935
+m : 264878
+k is 1638687 GCD is 1
+message block4is01001100001011010010111
+p : 8999183
+g : 3926497
+y : 2013935
+m : 2496151
+k is 8707133 GCD is 1
+message block5is01110110000101101110001
+p : 8999183
+g : 3926497
+y : 2013935
+m : 3869553
+k is 1845724 GCD is 2
+k is 6443818 GCD is 2
+k is 7484788 GCD is 2
+k is 8399998 GCD is 2
+k is 2366742 GCD is 2
+k is 4121393 GCD is 1
+message block6is00001000000000000000000
+p : 8999183
+g : 3926497
+y : 2013935
+m : 262144
+k is 2453295 GCD is 1
+EncryptedMessage [M=6, N=120, type=PLAINTEXT]
+Pair [a=2787700, b=4401889]
+Pair [a=8185529, b=1484968]
+Pair [a=1156063, b=5890914]
+Pair [a=7349863, b=6811092]
+Pair [a=6341451, b=6275424]
+Pair [a=6376504, b=1902110]
+
+Sigining ... 
+random 2293131
+k is 2293131 GCD is 1
+inverseK 4675015 p -1 11063638
+msg 9396557 r 4490969 s 6776854
+-- Sign finished -- 
+SignedMessage [message=EncryptedMessage [M=6, N=120, type=PLAINTEXT]
+Pair [a=2787700, b=4401889]
+Pair [a=8185529, b=1484968]
+Pair [a=1156063, b=5890914]
+Pair [a=7349863, b=6811092]
+Pair [a=6341451, b=6275424]
+Pair [a=6376504, b=1902110]
+, signature=Pair [a=4490969, b=6776854]]

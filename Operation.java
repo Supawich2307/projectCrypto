@@ -432,6 +432,56 @@ public class Operation {
         out.write(ciphertext.toString());
         out.close();
     }
+
+    public void writeSignedCipher(SignedMessage<EncryptedMessage, Pair> signedmsg, String filename) throws IOException{
+        PrintWriter out = new PrintWriter(filename);
+        EncryptedMessage msg = signedmsg.message;
+        out.write(msg.getN()+" ");
+        out.write(msg.getB()+" ");
+        out.write(msg.getM()+" ");
+        String type = msg.getType() == MediaType.FILE? "FILE": "PLAINTEXT";
+        out.write(type+"\n");
+        StringBuilder ciphertext = new StringBuilder();
+        for(int i = 0; i < msg.getM() - 1 ; i++){
+            ciphertext.append(encode(msg.getCipher()[i], msg.getB())+" ");
+        }
+        ciphertext.append(encode(msg.getCipher()[msg.getM()-1], msg.getB())+"\n");
+        out.write(ciphertext.toString());
+        out.write(encode(signedmsg.signature, msg.getB()));
+        out.close();
+    }
+    
+    public EncryptedMessage readMessage(String filename) throws IOException{
+        Scanner sc = new Scanner(new File(filename));
+        int N = Integer.parseInt(sc.next());
+        int B = Integer.parseInt(sc.next());
+        int M = Integer.parseInt(sc.next());
+        MediaType type =  MediaType.valueOf(sc.next());
+        sc.nextLine();
+        //read from file to (a,b)
+        Pair[] cipher = readCipherText(sc.nextLine(),M,B); 
+
+        // convert file to object 
+        EncryptedMessage encMsg = new EncryptedMessage(N,B,M,type,cipher);
+        return encMsg;
+    }
+        
+    public SignedMessage<EncryptedMessage, Pair> readSingedCipher(String filename) throws IOException{
+        Scanner sc = new Scanner(new File(filename));
+        int N = Integer.parseInt(sc.next());
+        int B = Integer.parseInt(sc.next());
+        int M = Integer.parseInt(sc.next());
+        MediaType type =  MediaType.valueOf(sc.next());
+        sc.nextLine();
+        //read from file to (a,b)
+        Pair[] cipher = readCipherText(sc.nextLine(),M,B); 
+
+        // convert file to object 
+        EncryptedMessage encMsg = new EncryptedMessage(N,B,M,type,cipher);
+        Pair signature = decodeMessage(sc.next());
+        return new SignedMessage<>(encMsg, signature);
+    }
+    
     public long hashFunction(String msg){
 		String sha1 = "";
 		try {

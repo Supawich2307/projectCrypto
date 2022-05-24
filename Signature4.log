@@ -1,0 +1,18 @@
+Sigining ... 
+random 1452063
+k is 1452063 GCD is 1
+inverseK 4437495 p -1 8999182
+msg 3666526909537158461 r 4640507 s 1836224
+-- Sign finished -- 
+SignedMessage [message=EncryptedMessage [M=6, N=120, type=PLAINTEXT]
+Pair [a=903883, b=8486147]
+Pair [a=7777890, b=8575569]
+Pair [a=2425394, b=5984249]
+Pair [a=5813211, b=3644868]
+Pair [a=4085358, b=660136]
+Pair [a=8831765, b=5584833]
+, signature=Pair [a=4640507, b=1836224]]
+msg 3666526909537158461 r 4640507 s 1836224
+ y pow r: 1126643 r pow s: 1432297
+7888509 compare to 7888509
+true
