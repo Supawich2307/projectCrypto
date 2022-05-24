@@ -234,6 +234,7 @@ class Elgamal {
     
     public SignedMessage<Long, Pair> signMessage(long msg) {
         long k, gcd;
+        msg = msg % (this.p-1);
         //gen K
         do{
             k = (long)(Math.random()*p) - 1;

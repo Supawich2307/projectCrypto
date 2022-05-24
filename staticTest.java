@@ -9,13 +9,13 @@ public class staticTest {
         File file = new File("Alice_to_Bob.out");
         Operation opt = new Operation();
         Elgamal Alice = new Elgamal();
-        Alice.setP(8575187);
-        Alice.setG(5840173);
-        Alice.setY(3844290);
-        Alice.setU(8575187);
+        Alice.setP(11);
+        Alice.setG(2);
+        Alice.setY(8);
+        Alice.setU(3);
         long X = opt.hashFunction("001100011011100011001100001110011001000110101100");
         
-        SignedMessage <Long,Pair> signmsg_Alice = Alice.signMessage(X);
+        SignedMessage <Long,Pair> signmsg_Alice = Alice.signMessage(9);
         System.out.println(Alice.Verify(signmsg_Alice));
 
         // Elgamal Bob = new Elgamal();
