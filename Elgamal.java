@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,25 +102,25 @@ class Elgamal {
         setN(key_size);
     }
 
-    public void writePublicKey (String filename) throws IOException{
-        PrintWriter out = new PrintWriter(filename);
-        out.write(name+" ");
-        out.write( n+"\n");
-        out.write(calculate.paddingZero(Long.toBinaryString(p), n)+"\n");
-        out.write(calculate.paddingZero(Long.toBinaryString(g), n)+"\n");
-        out.write(calculate.paddingZero(Long.toBinaryString(y), n)+"");
-        out.close();
+    public void writePublicKey () throws IOException{
+        RandomAccessFile outb = new RandomAccessFile(name+".pub","rw"); 
+        outb.writeBytes(name+" ");
+        outb.write((n+"\n").getBytes());
+        outb.write((calculate.paddingZero(Long.toBinaryString(p), n)+"\n").getBytes());
+        outb.write((calculate.paddingZero(Long.toBinaryString(g), n)+"\n").getBytes());
+        outb.write((calculate.paddingZero(Long.toBinaryString(y), n)+"").getBytes());
+        outb.close();
     }
 
     public void writePrivateKey () throws IOException{
-        PrintWriter out = new PrintWriter(name+".pri");
-        out.write(name+" ");
-        out.write( n+"\n");
-        out.write(calculate.paddingZero(Long.toBinaryString(p), n)+"\n");
-        out.write(calculate.paddingZero(Long.toBinaryString(g), n)+"\n");
-        out.write(calculate.paddingZero(Long.toBinaryString(u), n)+"\n");
-        out.write(calculate.paddingZero(Long.toBinaryString(y), n)+"");
-        out.close();
+        RandomAccessFile outb = new RandomAccessFile(name+".pri","rw"); 
+        outb.write((name+" ").getBytes());
+        outb.write((n+"\n").getBytes());
+        outb.write((calculate.paddingZero(Long.toBinaryString(p), n)+"\n").getBytes());
+        outb.write((calculate.paddingZero(Long.toBinaryString(g), n)+"\n").getBytes());
+        outb.write((calculate.paddingZero(Long.toBinaryString(u), n)+"\n").getBytes());
+        outb.write((calculate.paddingZero(Long.toBinaryString(y), n)+"").getBytes());
+        outb.close();
     }
 
     public void setKeyFromFile (String filename) throws IOException
@@ -303,6 +304,10 @@ class Elgamal {
         }
         
         return plaintext;
+    }
+
+    public EncryptedMessage encryptFile(String file, PublicKey<Long> publicKey) {
+        return null;
     }
 }
 

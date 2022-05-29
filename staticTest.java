@@ -15,8 +15,8 @@ public class staticTest {
         Alice.setU(3);
         long X = opt.hashFunction("001100011011100011001100001110011001000110101100");
         
-        SignedMessage <Long,Pair> signmsg_Alice = Alice.signMessage(9);
-        System.out.println(Alice.Verify(signmsg_Alice));
+        // SignedMessage <Long,Pair> signmsg_Alice = Alice.signMessage(9);
+        // System.out.println(Alice.Verify(signmsg_Alice));
 
         // Elgamal Bob = new Elgamal();
         // Bob.setP(9489407);

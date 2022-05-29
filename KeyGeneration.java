@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class KeyGeneration {
     public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-        PrintStream fileOut = new PrintStream("./Key_Generation.log");
+        PrintStream fileOut = new PrintStream("./Key_Generation2.log");
         System.setOut(fileOut);
         
         Scanner sc = new Scanner(System.in);
@@ -61,7 +61,7 @@ public class KeyGeneration {
         }
 
         PKC.writePrivateKey();
-        PKC.writePublicKey(name+".pub");
+        PKC.writePublicKey();
         
         System.out.println("P is => "+PKC.getP()+" \n G is => "+PKC.getG());
         System.out.println("U is => "+PKC.getU()+" \n Y is => "+PKC.getY());

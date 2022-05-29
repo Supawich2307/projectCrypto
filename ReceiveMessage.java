@@ -12,19 +12,18 @@ public class ReceiveMessage {
         //PrintStream fileOut = new PrintStream("./RecieveMessageA_B_1.log");
         //System.setOut(fileOut);
 
-        File file = new File("Alice_Uraiwan_Message.out");
         Operation opt = new Operation();
         Hashtable<String, PublicKey<Long>> pubKeyList = new Hashtable<>();
         opt.addPublicKey(pubKeyList, "Bob.pub");
         opt.addPublicKey(pubKeyList, "Alice.pub");
         opt.addPublicKey(pubKeyList, "Uraiwan.pub");
-        
+        opt.addPublicKey(pubKeyList, "Supakew.pub");
 
         Elgamal Uraiwan = new Elgamal();
         Uraiwan.setKeyFromFile("Uraiwan.pri");
 
         // convert file to object 
-        EncryptedMessage encMsg = opt.readMessage("Alice_Uraiwan_Message.out");
+        EncryptedMessage encMsg = opt.readMessage("Alice_Uraiwan_Message2.out");
 
         //decrypt each block 
         long [] plainDec =  Uraiwan.DecryptMessage(encMsg.cipher, encMsg.M);
@@ -34,7 +33,7 @@ public class ReceiveMessage {
 
         // System.out.println(N+" "+B+" "+M+" "+type+"\n"+cipher);
 
-        SignedMessage<EncryptedMessage, Pair> signedMessage = opt.readSingedCipher("Alice_Uraiwan_SignMessage.out");
+        SignedMessage<EncryptedMessage, Pair> signedMessage = opt.readSingedCipher("Alice_Uraiwan_SignMessage2.out");
     
         System.out.println(Uraiwan.VerifyCipher(signedMessage, pubKeyList.get("Alice")));
     }

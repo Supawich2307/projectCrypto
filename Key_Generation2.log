@@ -1,0 +1,11 @@
+Please enter your name
+Please choose type of plaintext
+1. String message 
+2. File
+Enter number 1 or 2: 
+Enter message : 
+Enter n (less than equal 31 bits) : 
+P is => 9489407 
+ G is => 6410519
+U is => 5836911 
+ Y is => 5186592
