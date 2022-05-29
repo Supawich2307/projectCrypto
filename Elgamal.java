@@ -139,14 +139,14 @@ class Elgamal {
 
     public  Pair Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
         
-        System.out.println("p : "+p+"\ng : "+g+"\ny : "+y+"\nm : "+message);
+        //System.out.println("p : "+p+"\ng : "+g+"\ny : "+y+"\nm : "+message);
         long k,gcd,a,b1;
 
         //gen K
         do{
             k = (long)(Math.random()*p) - 1;
             gcd = calculate.calculateGCD(k, p-1);
-            System.out.println("k is "+k+" GCD is "+gcd);
+            //System.out.println("k is "+k+" GCD is "+gcd);
         }
         while(gcd != 1);
         // ArrayList<Long> b = new ArrayList<Long>();
@@ -154,17 +154,8 @@ class Elgamal {
         b1 = calculate.powerModFast(y,k,p);
 
 
-        // //find B
-        // for(int i = 0;i < Pbytes.length;i+=n){
-            
-            // System.out.println("text "+pb);
         long b = (b1 *(message % p)) % p; //b = ((y^k mode p) * (x mod p)) mod p
-        // System.out.println("b_value >>"+b_value);
-        // b.add(b_value);
-        // }
-        // for (int i = 0; i < b.size(); i++) {
-        //     System.out.print(" "+b.get(i));
-        // }
+       
         return new Pair(a,b);
     }
 
@@ -306,13 +297,13 @@ class Elgamal {
         return plaintext;
     }
 
-    public EncryptedMessage encryptFile(String filename, PublicKey<Long> receiver) 
+    public EncryptedMessage encryptMessage(File f, PublicKey<Long> receiver) 
     throws IOException{
 
         int block_size = calculate.findLog(receiver.p);
 
         
-        String binaryText = calculate.readFile(new File(filename));
+        String binaryText = calculate.readFile(f);
         //System.out.println("text to binary is"+binaryText);
         int actual_size = binaryText.length();
         System.out.println("actual size of plaintext is "+actual_size);
