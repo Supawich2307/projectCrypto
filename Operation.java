@@ -467,7 +467,7 @@ public class Operation {
     }
         
         
-    public EncryptedMessage readCipher(String filename, PublicKey<Long> pubKey) throws IOException{
+    public EncryptedMessage readCipher(String filename, int key_size) throws IOException{
         DataInputStream data_in = new DataInputStream(
             new BufferedInputStream(
                 new FileInputStream(new File(filename))));
@@ -477,7 +477,7 @@ public class Operation {
         }
         int a = 0;
         int N = (int)binaryToDec(binary_size.toString());
-        int B = pubKey.key_size;
+        int B = key_size;
         int M = 0;
         MediaType type =  MediaType.FILE;
         StringBuilder cipherText = new StringBuilder();
