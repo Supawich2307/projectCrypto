@@ -530,24 +530,52 @@ public class Operation {
         return new SignedMessage<>(encMsg, signature);
     }
 
-    public SignedMessage<EncryptedMessage, Pair> readCipherSignature(String filename, PublicKey<Long> pubKey) throws IOException{
-        Scanner sc = new Scanner(new File(filename));
+    public SignedMessage<EncryptedMessage, Pair> readCipherSignature(String filename, int key_size) throws IOException{
+        DataInputStream data_in = new DataInputStream(
+            new BufferedInputStream(
+                new FileInputStream(new File(filename))));
         StringBuilder binary_size = new StringBuilder();
-        for(int i = 0; i  < 8; i++) {
-            binary_size.append(paddingZero(Integer.toBinaryString(sc.nextByte()), 8));
+        for(int i = 0; i  < 4; i++) {
+            binary_size.append(paddingZero(Integer.toBinaryString(data_in.read()), 8));
         }
+        int a = 0;
         int N = (int)binaryToDec(binary_size.toString());
-        int B = pubKey.key_size;
+        int B = key_size;
         int M = 0;
         MediaType type =  MediaType.FILE;
         StringBuilder cipherText = new StringBuilder();
         
-        while(sc.hasNext()) {
-            cipherText.append(paddingZero(Integer.toBinaryString(sc.nextByte()), 8));
+        while(a != -1) {
+            try {
+                    a = data_in.read();
+                    if(a == -1) {
+                        break;
+                    }
+                String b = String.format("%8s", Integer.toBinaryString(a)).replace(' ', '0');
+                cipherText.append(b);
+            }
+            catch(EOFException eof) {
+                System.out.println ("End of File");
+                break;
+            }
         }
-        int cipher_size = cipherText.length() - (cipherText.length()%B);
 
+        System.out.println("cipherText"+cipherText.toString());
+
+        StringBuilder signature ;
+        int actual_sign_length = key_size*2;
+        int  sign_length = actual_sign_length + (8-actual_sign_length%8);
+        int sign_start = cipherText.length()-sign_length;
+        signature = new StringBuilder(cipherText.substring(sign_start, cipherText.length()));
+        String actual_sign = signature.substring(0, 2*key_size);
+        Pair digital_signature = decodeMessage(actual_sign);
+
+        // trim new cipher
+        cipherText = new StringBuilder(cipherText.subSequence(0, sign_start));
+        int cipher_size = cipherText.length() - (cipherText.length()%B);
         String actual_cipher = cipherText.substring(0, cipher_size);
+        System.out.println("cipherText trim"+cipherText.toString());
+        System.out.println("signature "+actual_sign);
         
         M = cipher_size/(B*2);
 
@@ -559,8 +587,9 @@ public class Operation {
         }
         // convert file to object 
         EncryptedMessage encMsg = new EncryptedMessage(N,B,M,type,cipher);
-        Pair signature = decodeMessage(sc.next());
-        return new SignedMessage<>(encMsg, signature);
+        
+        SignedMessage<EncryptedMessage, Pair> res = new SignedMessage<>(encMsg, digital_signature);
+        return res;
     }
     
     public long hashFunction(String msg){
