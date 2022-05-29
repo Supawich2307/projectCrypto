@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -404,32 +405,31 @@ public class Operation {
     public void addPublicKey (Hashtable<String, PublicKey<Long>> pubKeyList, String filename)
     throws IOException
     {
-        Scanner fileIn = new Scanner(new FileReader(filename));
-        
-        while(fileIn.hasNext()) {
-            String name = fileIn.next();
-            int key_size = fileIn.nextInt();
-            long p = binaryToDec(fileIn.next());
-            long g = binaryToDec(fileIn.next());
-            long y = binaryToDec(fileIn.next());
-            pubKeyList.put(name, new PublicKey<Long>(p, g, y, key_size));
-        }
+        Scanner fileIn = new Scanner(new File(filename));
+        String name = fileIn.next();
+        int key_size = fileIn.nextInt();
+        long p = fileIn.nextLong();
+        long g = fileIn.nextLong();
+        long y = fileIn.nextLong();
+        pubKeyList.put(name, new PublicKey<Long>(p, g, y, key_size));
     }
 
 
     public void writeMessage(EncryptedMessage msg, String filename) throws IOException{
-        PrintWriter out = new PrintWriter(filename);
-        out.write(msg.getN()+" ");
-        out.write(msg.getB()+" ");
-        out.write(msg.getM()+" ");
-        String type = msg.getType() == MediaType.FILE? "FILE": "PLAINTEXT";
-        out.write(type+"\n");
+        RandomAccessFile out = new RandomAccessFile(filename,"rw");
+        out.writeInt(msg.getN());
         StringBuilder ciphertext = new StringBuilder();
         for(int i = 0; i < msg.getM() - 1 ; i++){
-            ciphertext.append(encode(msg.getCipher()[i], msg.getB())+" ");
+            ciphertext.append(encode(msg.getCipher()[i], msg.getB()));
         }
         ciphertext.append(encode(msg.getCipher()[msg.getM()-1], msg.getB()));
-        out.write(ciphertext.toString());
+        String ciphertextpadding = appendZero(ciphertext.toString(), ciphertext.length()+(8-ciphertext.length() % 8));
+        int index = 4;
+        for(int i = 0;i < ciphertextpadding.length();i+=8){
+            out.seek(index++); 
+            byte cipher_dec = (byte) binaryToDec(ciphertextpadding.substring(i, i+8));
+            out.write(cipher_dec); 
+        }
         out.close();
     }
 
