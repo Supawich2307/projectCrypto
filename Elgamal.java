@@ -127,16 +127,14 @@ class Elgamal {
 
     public void setKeyFromFile (String filename) throws IOException
     {
-        Scanner fileIn = new Scanner(new FileReader(filename));
-        
-        while(fileIn.hasNext()) {
-            this.name = fileIn.next();
-            this.n = fileIn.nextInt();
-            this.p = calculate.binaryToDec(fileIn.next());
-            this.g = calculate.binaryToDec(fileIn.next());
-            this.u = calculate.binaryToDec(fileIn.next());
-            this.y = calculate.binaryToDec(fileIn.next());
-        }
+        Scanner fileIn = new Scanner(new File(filename));
+        this.name = fileIn.next();
+        this.n = fileIn.nextInt();
+        this.p = fileIn.nextLong();
+        this.g = fileIn.nextLong();
+        this.y = fileIn.nextLong();
+        fileIn.close();
+        System.out.println("Set "+name+" key already");
     }
 
     public  Pair Encrypt(long p, long g, long y, long message) throws UnsupportedEncodingException{
