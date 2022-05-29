@@ -308,8 +308,36 @@ class Elgamal {
         return plaintext;
     }
 
-    public EncryptedMessage encryptFile(String file, PublicKey<Long> publicKey) {
-        return null;
+    public EncryptedMessage encryptFile(String filename, PublicKey<Long> receiver) 
+    throws IOException{
+
+        int block_size = calculate.findLog(receiver.p);
+
+        
+        String binaryText = calculate.readFile(new File(filename));
+        //System.out.println("text to binary is"+binaryText);
+        int actual_size = binaryText.length();
+        System.out.println("actual size of plaintext is "+actual_size);
+
+        String[] blocks = calculate.encodeToBlock(binaryText, block_size);
+        int M = blocks.length;      // M is number of blocks
+        Pair[] cipher_dec = new Pair[M];
+        for(int i = 0; i < M; i++) {
+            //System.out.println("message block"+ (i+1) +"is"+blocks[i]);
+            cipher_dec[i] = Encrypt(receiver.p, receiver.g, receiver.y, calculate.binaryToDec(blocks[i]));
+        }
+        System.out.println("no of block is "+M);
+
+        block_size = receiver.key_size;
+
+        EncryptedMessage real_cipher = new EncryptedMessage();
+        real_cipher.setM(M);
+        real_cipher.setN(actual_size);
+        real_cipher.setCipher(cipher_dec);
+        real_cipher.setType(MediaType.PLAINTEXT);
+        real_cipher.setB(block_size);
+        
+        return real_cipher;
     }
 }
 
