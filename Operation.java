@@ -466,6 +466,54 @@ public class Operation {
         return encMsg;
     }
         
+        
+    public EncryptedMessage readCipher(String filename, PublicKey<Long> pubKey) throws IOException{
+        DataInputStream data_in = new DataInputStream(
+            new BufferedInputStream(
+                new FileInputStream(new File(filename))));
+        StringBuilder binary_size = new StringBuilder();
+        for(int i = 0; i  < 4; i++) {
+            binary_size.append(paddingZero(Integer.toBinaryString(data_in.read()), 8));
+        }
+        int a = 0;
+        int N = (int)binaryToDec(binary_size.toString());
+        int B = pubKey.key_size;
+        int M = 0;
+        MediaType type =  MediaType.FILE;
+        StringBuilder cipherText = new StringBuilder();
+        
+        while(a != -1) {
+            try {
+                    a = data_in.read();
+                    if(a == -1) {
+                        break;
+                    }
+                String b = String.format("%8s", Integer.toBinaryString(a)).replace(' ', '0');
+                cipherText.append(b);
+            }
+            catch(EOFException eof) {
+                System.out.println ("End of File");
+                break;
+            }
+        }
+        
+        int cipher_size = cipherText.length() - (cipherText.length()%B);
+
+        String actual_cipher = cipherText.substring(0, cipher_size);
+        
+        M = cipher_size/(B*2);
+
+        Pair[] cipher = new Pair[M]; 
+        cipherText = new StringBuilder(actual_cipher);
+
+        for(int i = 0; i < M; i++) {
+            cipher[i] = decodeMessage(cipherText.substring(i*B*2, (i+1)*B*2));
+        }
+        // convert file to object 
+        EncryptedMessage encMsg = new EncryptedMessage(N,B,M,type,cipher);
+        return encMsg;
+    }
+   
     public SignedMessage<EncryptedMessage, Pair> readSingedCipher(String filename) throws IOException{
         Scanner sc = new Scanner(new File(filename));
         int N = Integer.parseInt(sc.next());
@@ -476,6 +524,39 @@ public class Operation {
         //read from file to (a,b)
         Pair[] cipher = readCipherText(sc.nextLine(),M,B); 
 
+        // convert file to object 
+        EncryptedMessage encMsg = new EncryptedMessage(N,B,M,type,cipher);
+        Pair signature = decodeMessage(sc.next());
+        return new SignedMessage<>(encMsg, signature);
+    }
+
+    public SignedMessage<EncryptedMessage, Pair> readCipherSignature(String filename, PublicKey<Long> pubKey) throws IOException{
+        Scanner sc = new Scanner(new File(filename));
+        StringBuilder binary_size = new StringBuilder();
+        for(int i = 0; i  < 8; i++) {
+            binary_size.append(paddingZero(Integer.toBinaryString(sc.nextByte()), 8));
+        }
+        int N = (int)binaryToDec(binary_size.toString());
+        int B = pubKey.key_size;
+        int M = 0;
+        MediaType type =  MediaType.FILE;
+        StringBuilder cipherText = new StringBuilder();
+        
+        while(sc.hasNext()) {
+            cipherText.append(paddingZero(Integer.toBinaryString(sc.nextByte()), 8));
+        }
+        int cipher_size = cipherText.length() - (cipherText.length()%B);
+
+        String actual_cipher = cipherText.substring(0, cipher_size);
+        
+        M = cipher_size/(B*2);
+
+        Pair[] cipher = new Pair[M]; 
+        cipherText = new StringBuilder(actual_cipher);
+
+        for(int i = 0; i < M; i++) {
+            cipher[i] = decodeMessage(cipherText.substring(i*B*2, (i+1)*B*2));
+        }
         // convert file to object 
         EncryptedMessage encMsg = new EncryptedMessage(N,B,M,type,cipher);
         Pair signature = decodeMessage(sc.next());
