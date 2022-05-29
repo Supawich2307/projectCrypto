@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
@@ -103,23 +105,23 @@ class Elgamal {
     }
 
     public void writePublicKey () throws IOException{
-        RandomAccessFile outb = new RandomAccessFile(name+".pub","rw"); 
-        outb.writeBytes(name+" ");
-        outb.write((n+"\n").getBytes());
-        outb.write((calculate.paddingZero(Long.toBinaryString(p), n)+"\n").getBytes());
-        outb.write((calculate.paddingZero(Long.toBinaryString(g), n)+"\n").getBytes());
-        outb.write((calculate.paddingZero(Long.toBinaryString(y), n)+"").getBytes());
+        FileWriter  outb = new FileWriter (name+".pub");  
+        outb.write(name+" ");
+        outb.write(n+"\n");
+        outb.write(p+"\n");
+        outb.write(g+"\n");
+        outb.write(y+"\n");
         outb.close();
     }
 
     public void writePrivateKey () throws IOException{
-        RandomAccessFile outb = new RandomAccessFile(name+".pri","rw"); 
-        outb.write((name+" ").getBytes());
-        outb.write((n+"\n").getBytes());
-        outb.write((calculate.paddingZero(Long.toBinaryString(p), n)+"\n").getBytes());
-        outb.write((calculate.paddingZero(Long.toBinaryString(g), n)+"\n").getBytes());
-        outb.write((calculate.paddingZero(Long.toBinaryString(u), n)+"\n").getBytes());
-        outb.write((calculate.paddingZero(Long.toBinaryString(y), n)+"").getBytes());
+        FileWriter  outb = new FileWriter (name+".pri");  
+        outb.write(name+" ");
+        outb.write(n+"\n");
+        outb.write(p+"\n");
+        outb.write(g+"\n");
+        outb.write(u+"\n");
+        outb.write(y+"\n");
         outb.close();
     }
 
