@@ -429,7 +429,6 @@ public class Operation {
         return text;
     }
 
-
     public void addPublicKey (Hashtable<String, PublicKey<Long>> pubKeyList, String filename)
     throws IOException
     {
@@ -441,7 +440,6 @@ public class Operation {
         long y = fileIn.nextLong();
         pubKeyList.put(name, new PublicKey<Long>(p, g, y, key_size));
     }
-
 
     public void writeMessage(EncryptedMessage msg, String filename) throws IOException{
         RandomAccessFile out = new RandomAccessFile(filename,"rw");
@@ -493,7 +491,6 @@ public class Operation {
         EncryptedMessage encMsg = new EncryptedMessage(N,B,M,type,cipher);
         return encMsg;
     }
-        
         
     public EncryptedMessage readCipher(String filename, int key_size) throws IOException{
         DataInputStream data_in = new DataInputStream(
@@ -633,6 +630,7 @@ public class Operation {
 
         return getDecimal(sha1);
     }
+    
     public long getDecimal(String hex){  
         String digits = "0123456789ABCDEF";  
             hex = hex.toUpperCase();  
