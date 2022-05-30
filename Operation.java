@@ -370,6 +370,32 @@ public class Operation {
         return plaintext;
     }
 
+    public String decodeToFile(long [] plainDec, EncryptedMessage encMsg, String Filename){
+        String plaintext = "";
+        for (long l : plainDec) {
+            String plaintextBinary = Long.toBinaryString(l);
+            
+            plaintext += paddingZero(plaintextBinary, encMsg.getB()-1);
+            
+        }
+        
+        plaintext = plaintext.substring(0, encMsg.getN());
+        
+        
+        return plaintext;
+    }
+
+    public void createFile(String data, String Filepath) throws IOException{
+        RandomAccessFile file = new RandomAccessFile(Filepath, "rw");  
+        int index = 0;
+        for(int i = 0;i < data.length();i+=8){
+            file.seek(index++); 
+            byte cipher_dec = (byte) binaryToDec(data.substring(i, i+8));
+            file.write(cipher_dec); 
+        }
+        file.close();  
+    }
+
     public String decodeToPlaintext(String binary) { // convert dec to plaintext
         
         String plaintext = "";
