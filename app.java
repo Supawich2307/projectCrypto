@@ -42,8 +42,7 @@ public class app {
                 switch(menu){
                     case 1: encrypt(me); break;
 
-                    case 2: encrypt(me);
-                            sign(me);
+                    case 2: encrypt_Sign(me);
                             break;
 
                     case 3: decrypt(me); break;
@@ -92,13 +91,15 @@ public class app {
     
     private static void sign(Elgamal me) throws IOException {
     
-        System.out.print("Enter file ciptertext : "); in.nextLine();
-        String Cfile = in.nextLine();
+        System.out.print("Enter file ciptertext : ");in.nextLine();
+        String Cfile = in.next();
+        System.out.print(Cfile);
         EncryptedMessage cipher = opt.readCipher(Cfile,(int) me.getN());
         System.out.println("main "+cipher);
         SignedMessage<EncryptedMessage, Pair> sign =  me.signMessage(cipher);
         System.out.println("main "+sign.toString());
-        opt.writeSignedCipher(sign, "sign.out");
+        opt.writeSignedCipher(sign, Cfile+".sign");
+
     }
     
     private static void setKey(Elgamal me) throws IOException{
@@ -166,6 +167,47 @@ public class app {
         }
     }
     
+    private static void encrypt_Sign(Elgamal me)throws IOException{
+        int typeMsg ;
+        EncryptedMessage messageAlice;
+        System.out.print("Enter reciver name :"); 
+        String reciver_name = in.next(); 
+        System.out.println("Please select type of Plaintext \n1 : Text\n2 : File");
+        typeMsg = in.nextInt();
+        
+        switch(typeMsg){
+            case 1 : 
+                    System.out.print("Enter Message : "); in.nextLine();
+                    String msg = in.nextLine();
+                    System.out.print(msg);
+                    messageAlice = me.encryptMessage(msg,pubKeyList.get(reciver_name));
+                    System.out.println(messageAlice);
+                    opt.writeMessage(messageAlice, me.getName()+"_"+reciver_name+"_Message.out");
+                    break;
+                    
+            case 2 : 
+                    System.out.print("Enter File name : "); 
+                    in.nextLine();
+                    String file = in.nextLine();
+                    messageAlice = me.encryptMessage(new File (file),pubKeyList.get(reciver_name));
+                    // System.out.println(messageAlice);
+                    opt.writeMessage(messageAlice, file+".enc");
+                    break;
+        }
+
+        System.out.println("---- Sign Cipher ----");
+        System.out.print("Enter file ciphertext : ");
+        String Cfile = in.next();
+        in.nextLine();
+        // System.out.print(Cfile);
+        EncryptedMessage cipher = opt.readCipher(Cfile,(int) me.getN());
+        // System.out.println("main "+cipher);
+        SignedMessage<EncryptedMessage, Pair> sign =  me.signMessage(cipher);
+        // System.out.println("main "+sign.toString());
+        opt.writeSignedCipher(sign, Cfile+".sign");
+
+    }
+    
     private static void decrypt(Elgamal me) throws IOException{
         System.out.println("Please select media type \n1 : Text\n2 : File");
         int typeMsg = in.nextInt();
@@ -179,11 +221,16 @@ public class app {
         switch(typeMsg){
             case 1 : System.out.println(opt.decodeToMessage(plainDec,encMsg));
                      break;
-            case 2 : 
+            case 2 : filename = filename.replace(".", "/");
+                    String filestructure[] = filename.split("/");
+                    // System.out.println("file structure"+filestructure.length+" name "+ filestructure[0]);
+                    String file_dec_name = filestructure[0]+"_dec."+filestructure[1];
+                    opt.decodeToFile(plainDec, encMsg, "data/"+file_dec_name);
                      break;
         }
         
     }
+    
     private static void decrypt_Verify(Elgamal me) throws IOException{
         System.out.println("Please select media type \n1 : Text\n2 : File");
         int typeMsg = in.nextInt();
@@ -200,7 +247,12 @@ public class app {
             case 1 : System.out.println(opt.decodeToMessage(plainDec,encMsg));
                      break;
             case 2 : 
-                     break;
+                    filename = filename.replace(".", "/");
+                    String filestructure[] = filename.split("/");
+                    // System.out.println("file structure"+filestructure.length+" name "+ filestructure[0]);
+                    String file_dec_name = filestructure[0]+"_decverified."+filestructure[1];
+                    opt.decodeToFile(plainDec, encMsg, "data/"+file_dec_name);
+                    break;
         }
         
     }
