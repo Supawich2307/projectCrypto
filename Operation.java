@@ -458,21 +458,35 @@ public class Operation {
     }
 
     public void writeSignedCipher(SignedMessage<EncryptedMessage, Pair> signedmsg, String filename) throws IOException{
-        PrintWriter out = new PrintWriter(filename);
         EncryptedMessage msg = signedmsg.message;
-        out.write(msg.getN()+" ");
-        out.write(msg.getB()+" ");
-        out.write(msg.getM()+" ");
-        String type = msg.getType() == MediaType.FILE? "FILE": "PLAINTEXT";
-        out.write(type+"\n");
+        RandomAccessFile out = new RandomAccessFile(filename,"rw");
+        out.writeInt(msg.getN());
         StringBuilder ciphertext = new StringBuilder();
         for(int i = 0; i < msg.getM() - 1 ; i++){
-            ciphertext.append(encode(msg.getCipher()[i], msg.getB())+" ");
+            ciphertext.append(encode(msg.getCipher()[i], msg.getB()));
         }
-        ciphertext.append(encode(msg.getCipher()[msg.getM()-1], msg.getB())+"\n");
-        out.write(ciphertext.toString());
-        out.write(encode(signedmsg.signature, msg.getB()));
+        ciphertext.append(encode(msg.getCipher()[msg.getM()-1], msg.getB()));
+        String ciphertextpadding = appendZero(ciphertext.toString(), ciphertext.length()+(8-ciphertext.length() % 8)); 
+        // System.out.println("realcipher >>>"+ciphertextpadding);
+        int index = 4;
+        for(int i = 0;i < ciphertextpadding.length();i+=8){
+            out.seek(index++); 
+            byte cipher_dec = (byte) binaryToDec(ciphertextpadding.substring(i, i+8));
+            // System.out.println(ciphertextpadding.substring(i, i+8)+" "+binaryToDec(ciphertextpadding.substring(i, i+8)));
+            out.write(cipher_dec); 
+        }
+        String encodesign = encode(signedmsg.signature, msg.getB());
+        String appendsign = appendZero(encodesign.toString(), encodesign.length()+(8-encodesign.length() % 8));
+        for(int i = 0;i < appendsign.length();i+=8){
+            out.seek(index++); 
+            byte sign_dec = (byte) binaryToDec(appendsign.substring(i, i+8));
+            // System.out.println(appendsign.substring(i, i+8)+" "+binaryToDec(appendsign.substring(i, i+8)));
+            out.write(sign_dec); 
+        }
+        
         out.close();
+
+        
     }
     
     public EncryptedMessage readMessage(String filename) throws IOException{
