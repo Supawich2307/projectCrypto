@@ -301,13 +301,14 @@ class Elgamal {
     throws IOException{
 
         int block_size = calculate.findLog(receiver.p);
-
+        System.out.println("p is "+receiver.p+" block_size is "+block_size);
         
         String binaryText = calculate.readFile(f);
-        //System.out.println("text to binary is"+binaryText);
+        System.out.println("size is "+binaryText.length()+"text to binary is"+binaryText);
         int actual_size = binaryText.length();
         System.out.println("actual size of plaintext is "+actual_size);
 
+        /*
         String[] blocks = calculate.encodeToBlock(binaryText, block_size);
         int M = blocks.length;      // M is number of blocks
         Pair[] cipher_dec = new Pair[M];
@@ -318,11 +319,11 @@ class Elgamal {
         System.out.println("no of block is "+M);
 
         block_size = receiver.key_size;
-
+*/
         EncryptedMessage real_cipher = new EncryptedMessage();
-        real_cipher.setM(M);
+        //real_cipher.setM(M);
         real_cipher.setN(actual_size);
-        real_cipher.setCipher(cipher_dec);
+        //real_cipher.setCipher(cipher_dec);
         real_cipher.setType(MediaType.PLAINTEXT);
         real_cipher.setB(block_size);
         

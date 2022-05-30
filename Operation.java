@@ -370,7 +370,7 @@ public class Operation {
         return plaintext;
     }
 
-    public String decodeToFile(long [] plainDec, EncryptedMessage encMsg, String Filename){
+    public void decodeToFile(long [] plainDec, EncryptedMessage encMsg, String Filename) throws IOException{
         String plaintext = "";
         for (long l : plainDec) {
             String plaintextBinary = Long.toBinaryString(l);
@@ -381,8 +381,8 @@ public class Operation {
         
         plaintext = plaintext.substring(0, encMsg.getN());
         
-        
-        return plaintext;
+        createFile(plaintext, Filename);
+
     }
 
     public void createFile(String data, String Filepath) throws IOException{
@@ -394,6 +394,8 @@ public class Operation {
             file.write(cipher_dec); 
         }
         file.close();  
+
+        System.out.println("File named "+Filepath+ " is created.");
     }
 
     public String decodeToPlaintext(String binary) { // convert dec to plaintext
