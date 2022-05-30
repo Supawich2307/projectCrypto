@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -27,7 +28,7 @@ public class SendMessage {
         }
 
         EncryptedMessage messageAlice = Alice.encryptMessage(
-                        "Hello, Uraiwan this is Alice!", 
+                        new File("Test.jpg"), 
                         pubKeyList.get("Uraiwan"));
 
         System.out.println(messageAlice);

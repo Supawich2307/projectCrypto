@@ -132,6 +132,7 @@ class Elgamal {
         this.n = fileIn.nextInt();
         this.p = fileIn.nextLong();
         this.g = fileIn.nextLong();
+        this.u = fileIn.nextLong();
         this.y = fileIn.nextLong();
         fileIn.close();
         System.out.println("Set "+name+" key already");
